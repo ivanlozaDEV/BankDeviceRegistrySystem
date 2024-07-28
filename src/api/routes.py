@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Post
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -58,3 +58,27 @@ def singin():
     user_token = create_access_token({"id":user.id, "email": user.email})
     return jsonify({"token": user_token})
     
+@api.route("/post", methods=["POST"])
+@jwt_required()
+def create_post():
+    body = request.json
+    user_data = get_jwt_identity()
+    content = body.get("content", None)
+    try:
+        new_post = Post(content=content, user_id=user_data["id"])
+        db.session.add(new_post)
+        db.session.commit()
+        db.session.refresh(new_post)
+        return jsonify({"post": new_post.serialize()}),201
+
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+    
+@api.route("/post/me", methods=["GET"])
+@jwt_required()
+def get_post_user_logged():
+    user_data = get_jwt_identity()
+    user_posts = Post.query.filter_by(user_id=user_data["id"]).all()
+    serialized_post = [post.serialize() for post in user_posts]
+    return jsonify({"posts": serialized_post}), 200
+
