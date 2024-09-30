@@ -17,7 +17,7 @@ class User(db.Model):
     assets = db.relationship('Assets', backref='user', lazy=True)
 
     def __repr__(self):
-        return f'<User {self.user_id}>'
+        return f'<User {self.user_name}>'
 
     def serialize(self):
         return {
@@ -66,6 +66,7 @@ class Migration(db.Model):
 
     
     assets = db.relationship('Assets', backref='migration', lazy=True)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     provider_id = db.Column(db.Integer, db.ForeignKey('provider.id'), nullable=False)
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
@@ -86,8 +87,6 @@ class Migration(db.Model):
             "assets": [asset.serialize() for asset in self.assets]
         }
 
-
-    
     
 class Branch(db.Model):
     id=db.Column(db.Integer, primary_key=True)
