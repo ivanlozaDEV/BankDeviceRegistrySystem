@@ -81,7 +81,7 @@ def get_all_users():
     if not users:
         return jsonify({"error": "Users not found"}), 404
     users_data = [user.serialize() for user in users]
-    return jsonify(users_data), 200
+    return jsonify({"users": users_data}), 200
 
 #GET ALL PROVIDERS
 
@@ -265,7 +265,7 @@ def add_userMB():
 def add_migration():
     body=request.json
     user_data = get_jwt_identity()
-    instalation_date = body.get("instalation_date", None)
+    installation_date = body.get("installation_date", None)
     migration_date = body.get("migration_date", None)
     migration_description = body.get("migration_description", None)
     migration_status = body.get("migration_status", None)
@@ -279,11 +279,11 @@ def add_migration():
     if branch is None:
         return jsonify({"error": "branch no encontrado"}), 404 
     
-    if instalation_date is None or migration_date is None or migration_description is None or migration_status is None or provider_id is None or branch_id is None:
+    if installation_date is None or migration_date is None or migration_description is None or migration_status is None or provider_id is None or branch_id is None:
         return jsonify({"error": "faltan datos"}), 400
 
     try:
-        new_migration = Migration(instalation_date=instalation_date, migration_date=migration_date, migration_description=migration_description, migration_status=migration_status, provider_id=provider.id, branch_id=branch.id, user_id=user_data["id"])
+        new_migration = Migration(installation_date=installation_date, migration_date=migration_date, migration_description=migration_description, migration_status=migration_status, provider_id=provider.id, branch_id=branch.id, user_id=user_data["id"])
         db.session.add(new_migration)
         db.session.commit()
         return jsonify({"new_migration": new_migration.serialize()}), 201
