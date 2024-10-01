@@ -317,11 +317,272 @@ def add_migration():
 
 #####################  EDIT ###################################
 
+# Edit ME
+@api.route('/edit_me', methods=['PUT'])
+@jwt_required()
+def edit_me():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        me_id = user_data["id"] 
+        user = User.query.get(me_id)
+        
+        if user is None:
+            return jsonify({"error": "User not found"}), 404
+        
+        user.user_name = body.get("user_name", user.user_name)  
+        if "password" in body and body["password"]:
+            user.password = generate_password_hash(body["password"])
+        
+        user.is_active = body.get("is_active", user.is_active)
+        user.names = body.get("names", user.names)
+        user.last_names = body.get("last_names", user.last_names)
+        user.employee_number = body.get("employee_number", user.employee_number)
+        user.subzone = body.get("subzone", user.subzone)
+        
+        db.session.commit()
+        return jsonify({"message": "User updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": str(error)}), 500
+
+
+# EDIT BRANCH
+@api.route('/edit_branch', methods=['PUT'])
+@jwt_required()
+def edit_branch():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        branch_id = body.get("id")
+        user_id = user_data["id"]
+        
+        if not branch_id or not user_id:
+            return jsonify({'error': 'Missing branch ID or user ID'}), 400
+        
+        branch = Branch.query.filter_by(id=branch_id, user_id=user_id).first()
+        if branch is None:
+            return jsonify({'error': 'Branch no found'}), 404
+        
+        branch.branch_cr = body.get("branch_cr", branch.branch_cr)
+        branch.branch_address = body.get("branch_address", branch.branch_address)
+        branch.branch_zone = body.get("branch_zone", branch.branch_zone)
+        branch.branch_subzone = body.get("branch_subzone", branch.branch_subzone)
+        
+        db.session.commit()
+        return jsonify({"message": "Branch updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+
+# EDIT PROVIDER
+@api.route('/edit_provider', methods=['PUT'])
+@jwt_required()
+def edit_provider():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        provider_id = body.get("id")
+        user_id = user_data["id"]
+        
+        if not provider_id or not user_id:
+            return jsonify({'error': 'Missing provider ID or user ID'}), 400
+        
+        provider = Provider.query.filter_by(id=provider_id, user_id=user_id).first()
+        if provider is None:
+            return jsonify({'error': 'Provider no found'}), 404
+        
+        provider.company_name = body.get("company_name", provider.company_name)
+        provider.rfc = body.get("rfc", provider.rfc)
+        provider.service = body.get("service", provider.service)
+        
+        db.session.commit()
+        return jsonify({"message": "Provider updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+
+
+# EDIT ASSET
+@api.route('/edit_asset', methods=['PUT'])
+@jwt_required()
+def edit_asset():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        asset_id = body.get("id")
+        user_id = user_data["id"]
+        
+        if not asset_id or not user_id:
+            return jsonify({'error': 'Missing asset ID or user ID'}), 400
+        
+        asset = Assets.query.filter_by(id=asset_id, user_id=user_id).first()
+        if asset is None:
+            return jsonify({'error': 'Asset no found'}), 404
+        
+        asset.asset_type = body.get("asset_type", asset.asset_type)
+        asset.asset_brand = body.get("asset_brand", asset.asset_brand)
+        asset.asset_model = body.get("asset_model", asset.asset_model)
+        asset.asset_serial = body.get("asset_serial", asset.asset_serial)
+        asset.asset_inventory_number = body.get("asset_inventory_number", asset.asset_inventory_number)
+        
+        db.session.commit()
+        return jsonify({"message": "Asset updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+
+# EDIT USER MB
+@api.route('/edit_userMB', methods=['PUT'])
+@jwt_required()
+def edit_userMB():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        user_id = body.get("id")
+        current_user_id = user_data["id"]
+        
+        if not user_id or not current_user_id:
+            return jsonify({'error': 'Missing userMB ID or user ID'}), 400
+        
+        userMB = UserMB.query.filter_by(id=user_id, user_id=current_user_id).first()
+        if userMB is None:
+            return jsonify({'error': 'UserMB no found'}), 404
+        
+        userMB.user_name_MB = body.get("user_name_MB", userMB.user_name_MB)
+        userMB.is_active = body.get("is_active", userMB.is_active)
+        userMB.names = body.get("names", userMB.names)
+        userMB.last_names = body.get("last_names", userMB.last_names)
+        userMB.employee_number = body.get("employee_number", userMB.employee_number)
+        
+        db.session.commit()
+        return jsonify({"message": "UserMB updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+
+# EDIT MIGRATION
+@api.route('/edit_migration', methods=['PUT'])
+@jwt_required()
+def edit_migration():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        migration_id = body.get("id")
+        user_id = user_data["id"]
+        
+        if not migration_id or not user_id:
+            return jsonify({'error': 'Missing migration ID or user ID'}), 400
+        
+        migration = Migration.query.filter_by(id=migration_id, user_id=user_id).first()
+        if migration is None:
+            return jsonify({'error': 'Migration no found'}), 404
+        
+        migration.installation_date = body.get("installation_date", migration.installation_date)
+        migration.migration_date = body.get("migration_date", migration.migration_date)
+        migration.migration_description = body.get("migration_description", migration.migration_description)
+        migration.migration_status = body.get("migration_status", migration.migration_status)
+        
+        db.session.commit()
+        return jsonify({"message": "Migration updated successfully"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
 
 
 #####################  DELETE ###################################
 
+# DELETE BRANCH
+@api.route('/delete_branch', methods=['DELETE'])
+@jwt_required()
+def delete_branch():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        branch_id = body.get("id", None)
+        
+        branch = Branch.query.filter_by(id=branch_id).first()
+        if branch is None:
+            return jsonify({'error': 'Branch no found'}), 404
+        
+        db.session.delete(branch)
+        db.session.commit()
+        return jsonify({"message": "Branch removed"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
 
 
+# DELETE PROVIDER
+@api.route('/delete_provider', methods=['DELETE'])
+@jwt_required()
+def delete_provider():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        provider_id = body.get("id", None)
+        
+        provider = Provider.query.filter_by(id=provider_id).first()
+        if provider is None:
+            return jsonify({'error': 'Provider no found'}), 404
+        
+        db.session.delete(provider)
+        db.session.commit()
+        return jsonify({"message": "Provider removed"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
 
+# DELETE ASSET
+@api.route('/delete_asset', methods=['DELETE'])
+@jwt_required()
+def delete_asset():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        asset_id = body.get("id", None)
+        
+        asset = Assets.query.filter_by(id=asset_id).first()
+        if asset is None:
+            return jsonify({'error': 'Asset no found'}), 404
+        
+        db.session.delete(asset)
+        db.session.commit()
+        return jsonify({"message": "Asset removed"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
 
+# DELETE USER MB
+@api.route('/delete_userMB', methods=['DELETE'])
+@jwt_required()
+def delete_userMB():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        user_id = body.get("id", None)
+        
+        userMB = UserMB.query.filter_by(id=user_id).first()
+        if userMB is None:
+            return jsonify({'error': 'UserMB no found'}), 404
+        
+        db.session.delete(userMB)
+        db.session.commit()
+        return jsonify({"message": "UserMB removed"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500
+
+# DELETE MIGRATION
+@api.route('/delete_migration', methods=['DELETE'])
+@jwt_required()
+def delete_migration():
+    try:
+        body = request.json
+        user_data = get_jwt_identity()
+        migration_id = body.get("id", None)
+        
+        migration = Migration.query.filter_by(id=migration_id).first()
+        if migration is None:
+            return jsonify({'error': 'Migration no found'}), 404
+        
+        db.session.delete(migration)
+        db.session.commit()
+        return jsonify({"message": "Migration removed"}), 200
+    except Exception as error:
+        return jsonify({"error": f"{error}"}), 500

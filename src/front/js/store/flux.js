@@ -447,6 +447,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(error);
         }
       },
+
+      ////////////  EDIT SECTION //////////////////
     },
   };
 };
