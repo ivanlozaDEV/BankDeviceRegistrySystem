@@ -6,7 +6,7 @@ from api.models import db, User, Provider, Branch, Assets, UserMB, Migration
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 
 api = Blueprint('api', __name__)
 
@@ -15,9 +15,18 @@ CORS(api)
 
 #####################   USERS SECTION    ########################################
 
+#CREATE ADMIN TOKEN FUNCTION#
+def create_master_token(master_user):
+    additional_claims = {"role": "Master"}
+    access_token = create_access_token(identity=master_user.id, additional_claims=additional_claims)
+    return access_token
+
+
+
 #REGISTER
 
 @api.route('/signup', methods=['POST'])
+@jwt_required()
 def signup():
     body=request.json
     user_name = body.get("user_name", None)
@@ -27,6 +36,20 @@ def signup():
     employee_number = body.get("employee_number", None)
     subzone = body.get("subzone", None)
     is_active = body.get("is_active", None)
+    role = body.get("role", None) 
+
+    #ROLE VALIDATION#
+    claims = get_jwt()
+    current_user_role = claims.get("role")
+
+    if current_user_role == "Master" and role != "Admin":
+        return jsonify({"error": "Solo el usuario master puede crear administradores"}), 403
+    if current_user_role == "admin" and role != "Ingeniero de Campo":
+        return jsonify({"error": "Solo el usuario admin puede crear Ingenieros de Campo"}), 403
+    if current_user_role not in ["Master", "Admin"]:
+        return jsonify({"error": "No tienes permisos para realizar esta acción"}), 403
+    
+    #END OF ROLE VALIDATION#
 
     if User.query.filter_by(user_name=user_name).first() is not None:
         return jsonify({"error": "Ese nombre de usuario ya esta siendo utilizado"}), 400
@@ -36,7 +59,7 @@ def signup():
         return jsonify({"error": "Todos los campos son requeridos"}), 400
     password_hash = generate_password_hash(password)
     try:
-        new_user = User(user_name=user_name, password=password_hash, names=names, last_names=last_names, employee_number=employee_number, subzone=subzone, is_active=is_active)
+        new_user = User(user_name=user_name, password=password_hash, names=names, last_names=last_names, employee_number=employee_number, subzone=subzone, is_active=is_active, role=role)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({"new_user": new_user.serialize()}), 201
@@ -58,7 +81,7 @@ def signin():
     if user is None:
         return jsonify({"error": "el usuario no existe"}), 404
     if not check_password_hash(user.password, password):
-        return jsonify({"error", "se ha producido un error al iniciar sesion, intenta nuevamente"}), 400
+        return jsonify({"error": "se ha producido un error al iniciar sesion, intenta nuevamente"}), 400
     user_token = create_access_token({"id": user.id, "user_name": user.user_name, "names": user.names, "last_names": user.last_names, "employee_number": user.employee_number, "is_active": user.is_active })
     return jsonify({"token": user_token}), 200 
 

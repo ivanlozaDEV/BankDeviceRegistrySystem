@@ -1,63 +1,56 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
-import "../../styles/home.css";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext"; // Adjust the path as needed
 
-export const Home = () => {
+const Home = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmitRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.register(email, password);
-    if (response) {
-      console.log(response);
-      navigate("/login");
+    setError("");
+
+    const success = await actions.login(userName, password);
+
+    if (success) {
+      navigate("/masterDashboard");
+    } else {
+      setError("Nombre de usuario o contraseña incorrectos");
     }
   };
 
   return (
-    <div className="mt-5">
-      <form className="cointainer card" onSubmit={handleSubmitRegister}>
-        <div className="card-body">
-          <h2 className="text-center">Register</h2>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              value={email}
-              aria-describedby="emailHelp"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-          <hr className="my-5" />
-          <Link to="/login">Posees una cuenta? haz click aqui</Link>
+    <div className="container">
+      <h1>Sign In</h1>
+      {error && <p className="error">{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="user_name">User Name</label>
+          <input
+            type="text"
+            id="user_name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            required
+          />
         </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Sign In</button>
       </form>
     </div>
   );
 };
+
+export default Home;
