@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext"; // Adjust the path as needed
+import img from "../../img/drapp_logo.png";
 
 const Home = () => {
   const { store, actions } = useContext(Context);
@@ -23,8 +24,15 @@ const Home = () => {
   };
 
   return (
-    <div className="container">
-      <form className="cointainer card p-5" onSubmit={handleSubmit}>
+    <div className="container col col-md-6">
+      <form
+        className="cointainer card p-5 m-5 rounded-5 shadow-lg  border"
+        onSubmit={handleSubmit}
+      >
+        <div className="img-container m-auto pb-5">
+          {" "}
+          <img src={img} alt="DR-App" height={200} width={200} />
+        </div>
         <h2 className="text-center">Iniciar Sesión</h2>
         {error && <p className="error">{error}</p>}
         <div className="mb-3">
@@ -39,9 +47,6 @@ const Home = () => {
             onChange={(e) => setUserName(e.target.value)}
             required
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
           <label htmlFor="exampleInputPassword1" className="form-label">
@@ -56,7 +61,7 @@ const Home = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-3">
           Enviar
         </button>
       </form>

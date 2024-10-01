@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       assets: [],
       usersMB: [],
       migrations: [],
+      rol: ["Master", "Admin", "Ingeniero de Campo"],
     },
     actions: {
       ////////////  USER SECTION //////////////////
@@ -22,13 +23,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         last_names,
         employee_number,
         subzone,
-        is_active
+        is_active,
+        role
       ) => {
+        const jwt = localStorage.getItem("token");
         try {
-          const response = await fetch(process.env.BACKEND_URL + "api/singup", {
+          const response = await fetch(process.env.BACKEND_URL + "api/signup", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              authorization: `Bearer ${jwt}`,
             },
             body: JSON.stringify({
               user_name,
@@ -38,12 +42,15 @@ const getState = ({ getStore, getActions, setStore }) => {
               employee_number,
               subzone,
               is_active,
+              role,
             }),
           });
           if (!response.ok) {
             return false;
           }
           const data = response.json();
+          console.log(data);
+
           return data;
         } catch (error) {
           console.log(error);
@@ -441,6 +448,377 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       ////////////  EDIT SECTION //////////////////
+
+      //EDIT ME
+
+      editMe: async (
+        user_name,
+        password,
+        names,
+        last_names,
+        employee_number,
+        subzone,
+        is_active
+      ) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_me",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                user_name,
+                password,
+                names,
+                last_names,
+                employee_number,
+                subzone,
+                is_active,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // EDIT BRANCH
+
+      editBranch: async (
+        id,
+        branch_cr,
+        branch_address,
+        branch_zone,
+        branch_subzone
+      ) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_branch",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+                branch_cr,
+                branch_address,
+                branch_zone,
+                branch_subzone,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // EDIT PROVIDER
+
+      editProvider: async (id, company_name, rfc, service) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_provider",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+                company_name,
+                rfc,
+                service,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // EDIT ASSET
+
+      editAsset: async (
+        id,
+        asset_type,
+        asset_brand,
+        asset_model,
+        asset_serial,
+        asset_inventory_number
+      ) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_asset",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+                asset_type,
+                asset_brand,
+                asset_model,
+                asset_serial,
+                asset_inventory_number,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // EDIT USER MB
+
+      editUserMB: async (
+        id,
+        user_name_MB,
+        is_active,
+        names,
+        last_names,
+        employee_number
+      ) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_userMB",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+                user_name_MB,
+                is_active,
+                names,
+                last_names,
+                employee_number,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // EDIT MIGRATION
+
+      editMigration: async (
+        id,
+        installation_date,
+        migration_date,
+        migration_description,
+        migration_status
+      ) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/edit_migration",
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+                installation_date,
+                migration_date,
+                migration_description,
+                migration_status,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      ////////////  DELETE SECTION //////////////////
+
+      // DELETE BRANCH
+
+      deleteBranch: async (id) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/delete_branch",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      //DELETE PROVIDER
+
+      deleteProvider: async (id) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/delete_provider",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // DELETE ASSET
+
+      deleteAsset: async (id) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/delete_asset",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // DELETE USER MB
+
+      deleteUserMB: async (id) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/delete_userMB",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+
+      // DELETE MIGRATION
+
+      deleteMigration: async (id) => {
+        const jwt = localStorage.getItem("token");
+        try {
+          const response = await fetch(
+            process.env.BACKEND_URL + "api/delete_migration",
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`,
+              },
+              body: JSON.stringify({
+                id,
+              }),
+            }
+          );
+          if (!response.ok) {
+            console.log(response);
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
     },
   };
 };

@@ -39,13 +39,13 @@ def signup():
     role = body.get("role", None) 
 
     #ROLE VALIDATION#
-    claims = get_jwt()
-    current_user_role = claims.get("role")
+    user_data = get_jwt_identity()
+    current_user_role = user_data["role"]
 
-    if current_user_role == "Master" and role != "Admin":
-        return jsonify({"error": "Solo el usuario master puede crear administradores"}), 403
-    if current_user_role == "admin" and role != "Ingeniero de Campo":
-        return jsonify({"error": "Solo el usuario admin puede crear Ingenieros de Campo"}), 403
+    if current_user_role != "Master" and role == "Master":
+        return jsonify({"error": "Solo el usuario master puede crear Masters"}), 403
+    if current_user_role != "Master" and role == "Admin":
+        return jsonify({"error": "Solo el usuario master puede crear Administradores"}), 403
     if current_user_role not in ["Master", "Admin"]:
         return jsonify({"error": "No tienes permisos para realizar esta acción"}), 403
     
@@ -58,7 +58,7 @@ def signup():
     if user_name is None or password is None or names is None or last_names is None or employee_number is None or subzone is None or is_active is None:
         return jsonify({"error": "Todos los campos son requeridos"}), 400
     password_hash = generate_password_hash(password)
-    
+
     try:
         new_user = User(user_name=user_name, password=password_hash, names=names, last_names=last_names, employee_number=employee_number, subzone=subzone, is_active=is_active, role=role)
         db.session.add(new_user)
@@ -83,7 +83,7 @@ def signin():
         return jsonify({"error": "el usuario no existe"}), 404
     if not check_password_hash(user.password, password):
         return jsonify({"error": "se ha producido un error al iniciar sesion, intenta nuevamente"}), 400
-    user_token = create_access_token({"id": user.id, "user_name": user.user_name, "names": user.names, "last_names": user.last_names, "employee_number": user.employee_number, "is_active": user.is_active })
+    user_token = create_access_token({"id": user.id, "user_name": user.user_name, "names": user.names, "last_names": user.last_names, "employee_number": user.employee_number, "is_active": user.is_active, "role": user.role })
     return jsonify({"token": user_token}), 200 
 
 
