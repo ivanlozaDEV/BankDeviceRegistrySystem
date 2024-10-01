@@ -58,6 +58,7 @@ def signup():
     if user_name is None or password is None or names is None or last_names is None or employee_number is None or subzone is None or is_active is None:
         return jsonify({"error": "Todos los campos son requeridos"}), 400
     password_hash = generate_password_hash(password)
+    
     try:
         new_user = User(user_name=user_name, password=password_hash, names=names, last_names=last_names, employee_number=employee_number, subzone=subzone, is_active=is_active, role=role)
         db.session.add(new_user)

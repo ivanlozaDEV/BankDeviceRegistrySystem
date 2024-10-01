@@ -5,15 +5,15 @@ import { useNavigate, Link } from "react-router-dom";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
-  const [email, setEmail] = useState("");
+  const [userName, setuserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    const isLoggedIn = await actions.login(email, password);
-    if (isLoggedIn) {
-      navigate("/private");
+    const response = await actions.register(userName, password);
+    if (response) {
+      navigate("/");
     }
   };
 
@@ -23,18 +23,18 @@ export const Login = () => {
         <div className="card-body">
           <h2 className="text-center">Login</h2>
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
+            <label htmlFor="exampleInputuserName1" className="form-label">
+              userName address
             </label>
             <input
-              type="email"
+              type="userName"
               className="form-control"
-              id="exampleInputEmail1"
-              value={email}
-              aria-describedby="emailHelp"
-              onChange={(e) => setEmail(e.target.value)}
+              id="exampleInputuserName1"
+              value={userName}
+              aria-describedby="userNameHelp"
+              onChange={(e) => setuserName(e.target.value)}
             />
-            <div id="emailHelp" className="form-text">
+            <div id="userNameHelp" className="form-text">
               We'll never share your email with anyone else.
             </div>
           </div>
@@ -53,8 +53,6 @@ export const Login = () => {
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
-          <hr className="my-5" />
-          <Link to="/">No Posees una cuenta? haz click aqui</Link>
         </div>
       </form>
     </div>

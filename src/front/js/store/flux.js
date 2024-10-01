@@ -76,6 +76,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       logout: () => {
         localStorage.removeItem("token");
+        console.log("logout");
       },
 
       ////////////  GET SECTION //////////////////
