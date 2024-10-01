@@ -25,24 +25,21 @@ const getState = ({ getStore, getActions, setStore }) => {
         is_active
       ) => {
         try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/singup",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                user_name,
-                password,
-                names,
-                last_names,
-                employee_number,
-                subzone,
-                is_active,
-              }),
-            }
-          );
+          const response = await fetch(process.env.BACKEND_URL + "api/singup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user_name,
+              password,
+              names,
+              last_names,
+              employee_number,
+              subzone,
+              is_active,
+            }),
+          });
           if (!response.ok) {
             return false;
           }
@@ -57,16 +54,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       login: async (user_name, password) => {
         try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/signin",
-            {
-              method: "POST",
-              headers: {
-                "Content-type": "application/json",
-              },
-              body: JSON.stringify({ user_name, password }),
-            }
-          );
+          const response = await fetch(process.env.BACKEND_URL + "api/signin", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({ user_name, password }),
+          });
           if (!response.ok) {
             return false;
           }
@@ -92,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
 
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/me", {
+          const response = await fetch(process.env.BACKEND_URL + "api/me", {
             method: "GET",
             headers: {
               authorization: `Bearer ${jwt}`,
@@ -113,7 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
 
         try {
-          const response = await fetch(process.env.BACKEND_URL + "/api/users", {
+          const response = await fetch(process.env.BACKEND_URL + "api/users", {
             method: "GET",
             headers: {
               authorization: `Bearer ${jwt}`,
@@ -136,7 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/providers",
+            process.env.BACKEND_URL + "api/providers",
             {
               method: "GET",
               headers: {
@@ -161,7 +155,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/branchs",
+            process.env.BACKEND_URL + "api/branchs",
             {
               method: "GET",
               headers: {
@@ -185,15 +179,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
 
         try {
-          const response = await fetch(
-            process.env.BACKEND_URL + "/api/assets",
-            {
-              method: "GET",
-              headers: {
-                authorization: `Bearer ${jwt}`,
-              },
-            }
-          );
+          const response = await fetch(process.env.BACKEND_URL + "api/assets", {
+            method: "GET",
+            headers: {
+              authorization: `Bearer ${jwt}`,
+            },
+          });
           const data = await response.json();
           if (response.ok) {
             console.log(data);
@@ -211,7 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/usersMB",
+            process.env.BACKEND_URL + "api/usersMB",
             {
               method: "GET",
               headers: {
@@ -236,7 +227,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/migrations",
+            process.env.BACKEND_URL + "api/migrations",
             {
               method: "GET",
               headers: {
@@ -267,7 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/add_branch",
+            process.env.BACKEND_URL + "api/add_branch",
             {
               method: "POST",
               headers: {
@@ -298,7 +289,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/add_provider",
+            process.env.BACKEND_URL + "api/add_provider",
             {
               method: "POST",
               headers: {
@@ -337,7 +328,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/add_asset",
+            process.env.BACKEND_URL + "api/add_asset",
             {
               method: "POST",
               headers: {
@@ -380,7 +371,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/add_userMB",
+            process.env.BACKEND_URL + "api/add_userMB",
             {
               method: "POST",
               headers: {
@@ -421,7 +412,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const jwt = localStorage.getItem("token");
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/add_migration",
+            process.env.BACKEND_URL + "api/add_migration",
             {
               method: "POST",
               headers: {
