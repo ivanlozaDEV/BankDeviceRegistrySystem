@@ -58,7 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       login: async (user_name, password) => {
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/singin",
+            process.env.BACKEND_URL + "/api/signin",
             {
               method: "POST",
               headers: {

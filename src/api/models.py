@@ -11,6 +11,7 @@ class User(db.Model):
     last_names = db.Column(db.String(50), unique=False, nullable=False)
     employee_number = db.Column(db.String(20), unique=True, nullable=False)
     subzone = db.Column(db.String(50), unique=False, nullable=False)
+    role = db.Column(db.String(50), unique=False, nullable=False)
 
     providers = db.relationship('Provider', backref='user', lazy=True)
     branch= db.relationship('Branch', backref='user', lazy=True)
@@ -28,6 +29,7 @@ class User(db.Model):
             "last_names": self.last_names,
             "employee_number": self.employee_number,
             "subzone": self.subzone,
+            "role": self.role,
             "providers": [provider.serialize() for provider in self.providers],
             "assets": [asset.serialize() for asset in self.assets]
         }
