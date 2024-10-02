@@ -19,7 +19,7 @@ export const Register = () => {
     subzone: "",
   });
 
-  useTokenExpiration();
+  //useTokenExpiration();
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -64,12 +64,7 @@ export const Register = () => {
     }
   };
 
-  useEffect(() => {
-    getTokenInfo();
-    if (getTokenInfo() !== "Master" && getTokenInfo() !== "Admin") {
-      navigate("/");
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <div className="mx-auto mt-5 col col-md-6">
