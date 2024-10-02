@@ -4,6 +4,7 @@ import "../../styles/home.css";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate, Link } from "react-router-dom";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
+import img from "../../img/drapp_logo.png";
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -71,10 +72,27 @@ export const Register = () => {
   }, []);
 
   return (
-    <div className="mt-5">
-      <form className="cointainer card" onSubmit={handleSubmitRegister}>
+    <div className="mx-auto mt-5 col col-md-6">
+      <form
+        className="container rounded shadow-lg border px-3"
+        onSubmit={handleSubmitRegister}
+      >
         <div className="card-body">
-          <h2 className="text-center">Registro Nuevo Usuario</h2>
+          <button
+            onClick={(e) => navigate("/masterDashboard")}
+            className="d-flex ms-auto btn btn-close"
+          ></button>
+          <div className="d-flex img-container m-auto">
+            {" "}
+            <img
+              className="m-auto"
+              src={img}
+              alt="DR-App"
+              height={200}
+              width={200}
+            />
+          </div>
+          <h2 className="text-center p-5">Registro Nuevo Usuario</h2>
           <div className="mb-3">
             <label htmlFor="exampleInputuserName1" className="form-label">
               Nombre de Usuario
@@ -83,7 +101,7 @@ export const Register = () => {
               type="userName"
               name="userName"
               className="form-control"
-              id="exampleInputuserName1"
+              id="userName"
               value={user.userName}
               aria-describedby="userNameHelp"
               onChange={(e) => handleChange(e)}
@@ -97,7 +115,7 @@ export const Register = () => {
               type="password"
               name="password"
               className="form-control"
-              id="exampleInputPassword1"
+              id="password"
               value={user.password}
               onChange={(e) => handleChange(e)}
             />
@@ -107,10 +125,10 @@ export const Register = () => {
               Nombres
             </label>
             <input
-              type="userName"
+              type="names"
               name="names"
               className="form-control"
-              id="exampleInputuserName1"
+              id="names"
               value={user.names}
               aria-describedby="userNameHelp"
               onChange={(e) => handleChange(e)}
@@ -121,10 +139,10 @@ export const Register = () => {
               Apellidos
             </label>
             <input
-              type="userName"
+              type="last_names"
               name="last_names"
               className="form-control"
-              id="exampleInputuserName1"
+              id="last_names"
               value={user.last_names}
               aria-describedby="userNameHelp"
               onChange={(e) => handleChange(e)}
@@ -135,10 +153,10 @@ export const Register = () => {
               Numero de Empleado
             </label>
             <input
-              type="userName"
+              type="employee_number"
               name="employee_number"
               className="form-control"
-              id="exampleInputuserName1"
+              id="employee_number"
               value={user.employee_number}
               aria-describedby="userNameHelp"
               onChange={(e) => handleChange(e)}
@@ -149,10 +167,10 @@ export const Register = () => {
               Subzona
             </label>
             <input
-              type="userName"
+              type="subzone"
               name="subzone"
               className="form-control"
-              id="exampleInputuserName1"
+              id="subzone"
               value={user.subzone}
               aria-describedby="userNameHelp"
               onChange={(e) => handleChange(e)}
@@ -180,7 +198,13 @@ export const Register = () => {
               </select>
             </div>
           </div>
-          <div className="form-check form-switch mb-3">
+          <div className="form-check form-switch my-4">
+            <label
+              className="form-check-label"
+              htmlFor="flexSwitchCheckDefault"
+            >
+              Activo
+            </label>
             <input
               className="form-check-input"
               type="checkbox"
@@ -190,14 +214,8 @@ export const Register = () => {
               id="is_active"
               onChange={(e) => setActiveOn(e)}
             />
-            <label
-              className="form-check-label"
-              htmlFor="flexSwitchCheckDefault"
-            >
-              Activo
-            </label>
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary d-flex m-auto">
             Enviar
           </button>
         </div>

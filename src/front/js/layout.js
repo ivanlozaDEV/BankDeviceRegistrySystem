@@ -21,18 +21,16 @@ const Layout = () => {
     return <BackendURL />;
 
   return (
-    <div className="container">
-      <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<MasterDashboard />} path="/masterDashboard" />
-            <Route element={<Register />} path="/register" />
-            <Route element={<h1>Not found!</h1>} />
-          </Routes>
-        </ScrollToTop>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter basename={basename}>
+      <ScrollToTop>
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<MasterDashboard />} path="/masterDashboard" />
+          <Route element={<Register />} path="/register" />
+          <Route element={<h1>Not found!</h1>} />
+        </Routes>
+      </ScrollToTop>
+    </BrowserRouter>
   );
 };
 

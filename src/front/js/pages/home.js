@@ -24,47 +24,49 @@ const Home = () => {
   };
 
   return (
-    <div className="container col col-md-6">
-      <form
-        className="cointainer card p-5 m-5 rounded-5 shadow-lg  border"
-        onSubmit={handleSubmit}
-      >
-        <div className="img-container m-auto pb-5">
-          {" "}
-          <img src={img} alt="DR-App" height={200} width={200} />
-        </div>
-        <h2 className="text-center">Iniciar Sesión</h2>
-        {error && <p className="error">{error}</p>}
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Nombre de usuario
-          </label>
-          <input
-            className="form-control"
-            type="text"
-            id="user_name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Contraseña
-          </label>
-          <input
-            className="form-control"
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mt-3">
-          Enviar
-        </button>
-      </form>
+    <div className="container">
+      <div className="container col col-md-6">
+        <form
+          className="container card p-5 m-5 rounded-5 shadow-lg  border"
+          onSubmit={handleSubmit}
+        >
+          <div className="img-container m-auto pb-5">
+            {" "}
+            <img src={img} alt="DR-App" height={200} width={200} />
+          </div>
+          <h2 className="text-center">Iniciar Sesión</h2>
+          {error && <p className="error">{error}</p>}
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail1" className="form-label">
+              Nombre de usuario
+            </label>
+            <input
+              className="form-control"
+              type="text"
+              id="user_name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Contraseña
+            </label>
+            <input
+              className="form-control"
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn btn-primary mt-3">
+            Enviar
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
