@@ -81,6 +81,7 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
           asset_model: "",
           asset_serial: "",
           asset_inventory_number: "",
+          provider_id: "",
         });
       }
     } catch (error) {
@@ -115,6 +116,7 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
         asset_model: initialAsset.asset_model || "",
         asset_serial: initialAsset.asset_serial || "",
         asset_inventory_number: initialAsset.asset_inventory_number || "",
+        provider_id: initialAsset.provider_id || "",
       });
     }
   }, []);

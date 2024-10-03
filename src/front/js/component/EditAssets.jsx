@@ -9,7 +9,7 @@ export const EditAssets = ({ asset }) => {
     <>
       <button
         type="button"
-        class="btn btn-primary"
+        class="btn"
         data-bs-toggle="modal"
         data-bs-target={`#edit-asset-${asset.id}`}
       >

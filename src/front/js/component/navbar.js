@@ -45,13 +45,15 @@ export const Navbar = () => {
       </button>
       <div className="collapse navbar-collapse pe-2" id="navbarNavDropdown">
         <div className="container-fluid">
-          <img
-            className="d-inline-block align-text-top"
-            src={img}
-            alt="DR-App"
-            height={80}
-            width={80}
-          />
+          <Link to={"/masterDashboard"}>
+            <img
+              className="d-inline-block align-text-top"
+              src={img}
+              alt="DR-App"
+              height={80}
+              width={80}
+            />
+          </Link>
         </div>
         <ul className="navbar-nav">
           <li className="nav-item dropdown">

@@ -59,7 +59,6 @@ export const Assets = () => {
               <th>Modelo</th>
               <th>N° Serie</th>
               <th>N° Activo</th>
-              <th colSpan={2}>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -74,7 +73,7 @@ export const Assets = () => {
                 <td colSpan={2}>
                   <button
                     type="button"
-                    className="btn btn-danger me-5"
+                    className="btn me-5"
                     onClick={(e) => deleteAsset(member.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
