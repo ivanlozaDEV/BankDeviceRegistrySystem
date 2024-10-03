@@ -38,7 +38,7 @@ const useTokenExpiration = () => {
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     if (!jwt) {
-      navigate("/login");
+      navigate("/");
       return;
     }
 

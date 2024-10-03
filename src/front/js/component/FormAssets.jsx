@@ -186,14 +186,15 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
             onChange={handleChange}
           />
         </div>
-        {/* <select
+        <select
           className="form-select"
+          name="provider_id"
           aria-label="Default select example"
           onChange={handleChange}
           required
         >
           <option value="" selected>
-            Selecciona una cervecería
+            Selecciona un provedor
           </option>
           {store.providers.map((provider) => {
             return (
@@ -202,7 +203,7 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
               </option>
             );
           })}
-        </select> */}
+        </select>
         <div className="">
           <button type="submit" className="form-members-submit">
             {btnAsset}

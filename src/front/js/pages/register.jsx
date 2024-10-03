@@ -17,6 +17,7 @@ export const Register = () => {
     last_names: "",
     employee_number: "",
     subzone: "",
+    rol: "",
   });
 
   useTokenExpiration();
@@ -32,7 +33,6 @@ export const Register = () => {
     } else {
       setActive(true);
     }
-    console.log(active);
   };
 
   const handleSubmitRegister = async (e) => {
