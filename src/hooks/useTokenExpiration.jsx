@@ -53,7 +53,7 @@ const useTokenExpiration = () => {
     } catch (error) {
       console.error("Token no válido", error);
       localStorage.removeItem("token");
-      navigate("/login");
+      navigate("/");
       return;
     }
 

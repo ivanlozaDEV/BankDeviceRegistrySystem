@@ -3,10 +3,36 @@ import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
 import { CreateAssets } from "../component/CreateAssets.jsx";
 import { EditAssets } from "../component/EditAssets.jsx";
+import Swal from "sweetalert2";
+import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 
 export const Assets = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+
+  useTokenExpiration();
+
+  const getTokenInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.sub.role;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("token");
+    if (!jwt) {
+      navigate("/");
+      return;
+    }
+    getTokenInfo();
+  }, []);
+
   const deleteAsset = (id) => {
     Swal.fire({
       title: "Advertencia",
@@ -74,7 +100,7 @@ export const Assets = () => {
                   <button
                     type="button"
                     className="btn me-5"
-                    onClick={(e) => deleteAsset(member.id)}
+                    onClick={(e) => deleteAsset(asset.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>

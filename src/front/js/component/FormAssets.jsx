@@ -116,7 +116,7 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
         asset_model: initialAsset.asset_model || "",
         asset_serial: initialAsset.asset_serial || "",
         asset_inventory_number: initialAsset.asset_inventory_number || "",
-        provider_id: initialAsset.provider_id || "",
+        provider_id: initialAsset.provider_id,
       });
     }
   }, []);
@@ -192,12 +192,11 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
           className="form-select"
           name="provider_id"
           aria-label="Default select example"
+          value={asset.provider_id}
           onChange={handleChange}
           required
         >
-          <option value="" selected>
-            Selecciona un provedor
-          </option>
+          <option value="">Selecciona un provedor</option>
           {store.providers.map((provider) => {
             return (
               <option key={provider.id} value={provider.id}>
