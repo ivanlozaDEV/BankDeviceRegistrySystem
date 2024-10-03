@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 import { jwtDecode } from "jwt-decode";
-import { Navbar } from "../component/navbar.js";
 import "../../styles/index.css";
 
 const masterDashboard = () => {
@@ -36,7 +35,6 @@ const masterDashboard = () => {
 
   return (
     <div className="container-fluid m-0 p-0">
-      <Navbar />
       <div className="container-fluid">
         <div>
           <div className="card text-center rounded-5 shadow-lg border m-5">

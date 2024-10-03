@@ -43,7 +43,7 @@ class Provider(db.Model):
     assets= db.relationship('Assets', backref='provider', lazy=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
+    branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=True)
 
     def __repr__(self):
         return f'<Provider {self.company_name}>'

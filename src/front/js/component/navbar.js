@@ -88,8 +88,15 @@ export const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Agregar Activo
+                <a
+                  className={
+                    getTokenInfo() !== "Master" && getTokenInfo() !== "Admin"
+                      ? "d-none"
+                      : "dropdown-item"
+                  }
+                  onClick={(e) => navigate("/assets")}
+                >
+                  Activos
                 </a>
               </li>
               <li>
