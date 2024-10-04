@@ -107,7 +107,7 @@ export const FormProviders = ({
     actions.getProviders();
     if (initialProvider) {
       setProvider({
-        branch_id: initialProvider.branch_id || "",
+        branch_id: initialProvider.branch_id,
         company_name: initialProvider.company_name || "",
         rfc: initialProvider.rfc || "",
         service: initialProvider.service || "",
@@ -126,7 +126,7 @@ export const FormProviders = ({
             onChange={handleChange}
             required
           >
-            <option value="">Selecciona un branch</option>
+            <option value="">Selecciona una Sucursal</option>
             {store.branchs.map((branch) => {
               return (
                 <option key={branch.id} value={branch.id}>

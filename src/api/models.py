@@ -51,6 +51,7 @@ class Provider(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "branch_id": self.branch_id,
             "company_name": self.company_name,
             "rfc": self.rfc,
             "user_id": self.user_id,

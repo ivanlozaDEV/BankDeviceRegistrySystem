@@ -271,6 +271,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         branch_subzone
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/add_branch",
@@ -292,6 +293,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getBranchs();
           return data;
         } catch (error) {
           console.log(error);
@@ -302,6 +304,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       add_provider: async (branch_id, company_name, rfc, service) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/add_provider",
@@ -323,6 +326,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getProviders();
           return data;
         } catch (error) {
           console.log(error);
@@ -382,6 +386,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         asset_id
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/add_userMB",
@@ -406,6 +411,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getUsersMB();
           return data;
         } catch (error) {
           console.log(error);
@@ -423,6 +429,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         branch_id
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/add_migration",
@@ -446,6 +453,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getMigrations();
           return data;
         } catch (error) {
           console.log(error);
@@ -466,6 +474,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         is_active
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_me",
@@ -490,6 +499,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getMe();
           return data;
         } catch (error) {
           console.log(error);
@@ -506,6 +516,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         branch_subzone
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_branch",
@@ -528,6 +539,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getBranchs();
           return data;
         } catch (error) {
           console.log(error);
@@ -538,6 +550,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       editProvider: async (id, company_name, rfc, service) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_provider",
@@ -559,6 +572,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getProviders();
           return data;
         } catch (error) {
           console.log(error);
@@ -618,6 +632,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         employee_number
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_userMB",
@@ -641,6 +656,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getUsersMB();
           return data;
         } catch (error) {
           console.log(error);
@@ -657,6 +673,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         migration_status
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_migration",
@@ -679,6 +696,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getMigrations();
           return data;
         } catch (error) {
           console.log(error);
@@ -691,6 +709,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteBranch: async (id) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/delete_branch",
@@ -709,6 +728,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getBranchs();
           return data;
         } catch (error) {
           console.log(error);
@@ -719,6 +739,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteProvider: async (id) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/delete_provider",
@@ -737,6 +758,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getProviders();
           return data;
         } catch (error) {
           console.log(error);
@@ -777,6 +799,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteUserMB: async (id) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/delete_userMB",
@@ -795,6 +818,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getUsersMB();
           return data;
         } catch (error) {
           console.log(error);
@@ -805,6 +829,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteMigration: async (id) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/delete_migration",
@@ -823,6 +848,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getMigrations();
           return data;
         } catch (error) {
           console.log(error);

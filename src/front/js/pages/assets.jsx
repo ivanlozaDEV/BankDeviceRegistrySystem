@@ -80,45 +80,48 @@ export const Assets = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 ">
       <div className="d-flex justify-content-end mb-3">
         <CreateAssets />
       </div>
       {currentAssets.length > 0 ? (
-        <table className="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Tipo</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>N° Serie</th>
-              <th>N° Activo</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentAssets.map((asset) => (
-              <tr key={asset.id}>
-                <td>{asset.id}</td>
-                <td>{asset.asset_type}</td>
-                <td>{asset.asset_brand}</td>
-                <td>{asset.asset_model}</td>
-                <td>{asset.asset_serial}</td>
-                <td>{asset.asset_inventory_number}</td>
-                <td colSpan={2}>
-                  <button
-                    type="button"
-                    className="btn me-5"
-                    onClick={() => deleteAsset(asset.id)}
-                  >
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                  <EditAssets asset={asset} />
-                </td>
+        <div className="row m-0 p-0 overflow-auto">
+          <table className="table table-striped table-hover table-bordered table-responsive text-center">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>N° Serie</th>
+                <th>N° Activo</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentAssets.map((asset) => (
+                <tr key={asset.id}>
+                  <td>{asset.id}</td>
+                  <td>{asset.asset_type}</td>
+                  <td>{asset.asset_brand}</td>
+                  <td>{asset.asset_model}</td>
+                  <td>{asset.asset_serial}</td>
+                  <td>{asset.asset_inventory_number}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => deleteAsset(asset.id)}
+                    >
+                      <i className="fa-solid fa-trash"></i>
+                    </button>
+                    <EditAssets asset={asset} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <p>No hay activos disponibles.</p>
       )}
