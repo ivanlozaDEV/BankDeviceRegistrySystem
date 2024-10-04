@@ -339,6 +339,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         provider_id
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/add_asset",
@@ -362,6 +363,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getAssets();
           return data;
         } catch (error) {
           console.log(error);
@@ -574,6 +576,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         asset_inventory_number
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/edit_asset",
@@ -597,6 +600,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getAssets();
           return data;
         } catch (error) {
           console.log(error);
@@ -743,6 +747,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteAsset: async (id) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/delete_asset",
@@ -761,6 +766,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
+          actions.getAssets();
           return data;
         } catch (error) {
           console.log(error);

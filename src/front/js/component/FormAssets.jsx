@@ -205,8 +205,9 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
             );
           })}
         </select>
-        <div className="">
-          <button type="submit" className="form-members-submit">
+        <hr />
+        <div className="d-flex justify-content-end">
+          <button type="submit" className="form-members-submit btn btn-primary">
             {btnAsset}
           </button>
         </div>

@@ -7,7 +7,7 @@ import Home from "./pages/home";
 import { Register } from "./pages/register.jsx";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer";
 import MasterDashboard from "./pages/masterDashboard.jsx";
 import { Assets } from "./pages/assets.jsx";

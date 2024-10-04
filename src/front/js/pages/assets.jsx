@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
 import { CreateAssets } from "../component/CreateAssets.jsx";
@@ -9,29 +9,47 @@ import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 export const Assets = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1); // Página actual
+  const [assetsPerPage] = useState(4); // Número de activos por página
 
   useTokenExpiration();
 
-  const getTokenInfo = () => {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-    try {
-      const decodedToken = jwtDecode(token);
-      return decodedToken.sub.role;
-    } catch (error) {
-      console.error("Error decoding token:", error);
-      return null;
+  // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
+  const filteredAssets = store.assets; // Manteniendo todos los activos sin filtrar
+
+  // Calcular los índices para la paginación
+  const indexOfLastAsset = currentPage * assetsPerPage; // Último activo en la página actual
+  const indexOfFirstAsset = indexOfLastAsset - assetsPerPage; // Primer activo en la página actual
+  const currentAssets = filteredAssets.slice(
+    indexOfFirstAsset,
+    indexOfLastAsset
+  ); // Activos mostrados en la página actual
+
+  const totalPages = Math.ceil(filteredAssets.length / assetsPerPage); // Total de páginas
+  const paginate = (pageNumber) => setCurrentPage(pageNumber); // Función para cambiar de página
+
+  // Función para manejar la paginación hacia adelante
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Función para manejar la paginación hacia atrás
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     if (!jwt) {
-      navigate("/");
+      navigate("/login");
       return;
     }
-    getTokenInfo();
-  }, []);
+    actions.getAssets();
+  }, [actions, navigate]);
 
   const deleteAsset = (id) => {
     Swal.fire({
@@ -41,7 +59,7 @@ export const Assets = () => {
       icon: "error",
       showDenyButton: true,
       denyButtonText: "No",
-      confirmButtonText: "Si",
+      confirmButtonText: "Sí",
       customClass: {
         container: "custom-container",
       },
@@ -58,24 +76,16 @@ export const Assets = () => {
             container: "custom-container",
           },
         });
-      } else {
-        return;
       }
     });
   };
-  useEffect(() => {
-    const jwt = localStorage.getItem("token");
-    if (!jwt) {
-      navigate("/login");
-    }
-  }, [navigate]);
 
   return (
     <div className="container mt-5">
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end mb-3">
         <CreateAssets />
       </div>
-      {store.assets.length > 0 ? (
+      {currentAssets.length > 0 ? (
         <table className="table table-striped table-hover">
           <thead>
             <tr>
@@ -88,7 +98,7 @@ export const Assets = () => {
             </tr>
           </thead>
           <tbody>
-            {store.assets.map((asset) => (
+            {currentAssets.map((asset) => (
               <tr key={asset.id}>
                 <td>{asset.id}</td>
                 <td>{asset.asset_type}</td>
@@ -100,7 +110,7 @@ export const Assets = () => {
                   <button
                     type="button"
                     className="btn me-5"
-                    onClick={(e) => deleteAsset(asset.id)}
+                    onClick={() => deleteAsset(asset.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
@@ -113,6 +123,45 @@ export const Assets = () => {
       ) : (
         <p>No hay activos disponibles.</p>
       )}
+
+      {/* Controles de paginación */}
+      <nav>
+        <ul className="pagination justify-content-center">
+          {/* Botón de página anterior */}
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+            >
+              &laquo; {/* Flecha izquierda */}
+            </button>
+          </li>
+          {/* Botones para cada número de página */}
+          {[...Array(totalPages)].map((_, index) => (
+            <li className="page-item" key={index}>
+              <button
+                className={`page-link ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+                onClick={() => paginate(index + 1)}
+              >
+                {index + 1}
+              </button>
+            </li>
+          ))}
+          {/* Botón de página siguiente */}
+          <li className="page-item">
+            <button
+              className="page-link"
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+            >
+              &raquo; {/* Flecha derecha */}
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };
