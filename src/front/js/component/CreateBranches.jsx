@@ -1,30 +1,30 @@
 import React from "react";
-import { FormAssets } from "./FormAssets.jsx";
+import { FormBranches } from "./FormBranches.jsx";
 
-export const CreateAssets = () => {
+export const CreateBranches = () => {
   return (
     <>
       <button
         type="button"
         class="btn btn-primary"
         data-bs-toggle="modal"
-        data-bs-target="#createAssetModal"
+        data-bs-target="#createBranchModal"
       >
         <i className="fa-solid fa-plus"></i>
       </button>
 
       <div
         class="modal fade"
-        id="createAssetModal"
+        id="createBranchModal"
         tabindex="-1"
-        aria-labelledby="createAssetModal"
+        aria-labelledby="createBranchModal"
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="createAssetModal">
-                Crear Activo
+              <h5 class="modal-title" id="createProviderModal">
+                Crear Sucursal
               </h5>
               <button
                 type="button"
@@ -34,7 +34,7 @@ export const CreateAssets = () => {
               ></button>
             </div>
             <div class="modal-body">
-              <FormAssets btnAsset={"Crear"} />
+              <FormBranches btnBranch={"Crear"} />
             </div>
           </div>
         </div>

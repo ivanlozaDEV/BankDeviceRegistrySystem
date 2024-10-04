@@ -1,31 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import { CreateAssets } from "../component/CreateAssets.jsx";
-import { EditAssets } from "../component/EditAssets.jsx";
+import { CreateBranches } from "../component/CreateBranches.jsx";
+import { EditBranches } from "../component/EditBranches.jsx";
 import Swal from "sweetalert2";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 
-export const Assets = () => {
+export const Branches = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [assetsPerPage] = useState(4); // Número de activos por página
+  const [branchesPerPage] = useState(4); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
-  const filteredAssets = store.assets; // Manteniendo todos los activos sin filtrar
+  const filteredBranches = store.branchs; // Manteniendo todos los activos sin filtrar
+  console.log(filteredBranches);
 
   // Calcular los índices para la paginación
-  const indexOfLastAsset = currentPage * assetsPerPage; // Último activo en la página actual
-  const indexOfFirstAsset = indexOfLastAsset - assetsPerPage; // Primer activo en la página actual
-  const currentAssets = filteredAssets.slice(
-    indexOfFirstAsset,
-    indexOfLastAsset
+  const indexOfLastBranch = currentPage * branchesPerPage; // Último activo en la página actual
+  const indexOfFirstBranch = indexOfLastBranch - branchesPerPage; // Primer activo en la página actual
+  const currentBranches = filteredBranches.slice(
+    indexOfFirstBranch,
+    indexOfLastBranch
   ); // Activos mostrados en la página actual
 
-  const totalPages = Math.ceil(filteredAssets.length / assetsPerPage); // Total de páginas
+  const totalPages = Math.ceil(filteredBranches.length / branchesPerPage); // Total de páginas
   const paginate = (pageNumber) => setCurrentPage(pageNumber); // Función para cambiar de página
 
   // Función para manejar la paginación hacia adelante
@@ -50,10 +51,10 @@ export const Assets = () => {
     }
   }, [actions, navigate]);
 
-  const deleteAsset = (id) => {
+  const deleteBranch = (id) => {
     Swal.fire({
       title: "Advertencia",
-      text: "¿Desea eliminar el Activo?",
+      text: "¿Desea eliminar la Sucursal?",
       position: "center",
       icon: "error",
       showDenyButton: true,
@@ -64,11 +65,11 @@ export const Assets = () => {
       },
     }).then((click) => {
       if (click.isConfirmed) {
-        actions.deleteAsset(id);
+        actions.deleteProvider(id);
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Activo eliminado correctamente",
+          title: "Sucursal eliminada correctamente",
           showConfirmButton: false,
           timer: 1500,
           customClass: {
@@ -82,45 +83,44 @@ export const Assets = () => {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-end mb-3">
-        <CreateAssets />
+        <CreateBranches />
       </div>
-      {currentAssets.length > 0 ? (
+      {currentBranches.length > 0 ? (
         <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th>#</th>
-              <th>Tipo</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>N° Serie</th>
-              <th>N° Activo</th>
+              <th>CR</th>
+              <th>Dirección</th>
+              <th>Zona</th>
+              <th>Subzona</th>
             </tr>
           </thead>
           <tbody>
-            {currentAssets.map((asset) => (
-              <tr key={asset.id}>
-                <td>{asset.id}</td>
-                <td>{asset.asset_type}</td>
-                <td>{asset.asset_brand}</td>
-                <td>{asset.asset_model}</td>
-                <td>{asset.asset_serial}</td>
-                <td>{asset.asset_inventory_number}</td>
+            {currentBranches.map((branch) => (
+              <tr key={branch.id}>
+                <td>{branch.id}</td>
+                <td>{branch.branch_cr}</td>
+                <td>{branch.branch_address}</td>
+                <td>{branch.branch_zone}</td>
+                <td>{branch.branch_subzone}</td>
+
                 <td colSpan={2}>
                   <button
                     type="button"
                     className="btn me-5"
-                    onClick={() => deleteAsset(asset.id)}
+                    onClick={() => deleteBranch(branch.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
-                  <EditAssets asset={asset} />
+                  <EditBranches branch={branch} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p>No hay activos disponibles.</p>
+        <p>No hay sucursales disponibles.</p>
       )}
 
       {/* Controles de paginación */}

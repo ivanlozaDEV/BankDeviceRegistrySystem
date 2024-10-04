@@ -1,31 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import { CreateAssets } from "../component/CreateAssets.jsx";
-import { EditAssets } from "../component/EditAssets.jsx";
+import { CreateProviders } from "../component/CreateProviders.jsx";
+import { EditProviders } from "../component/EditProviders.jsx";
 import Swal from "sweetalert2";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 
-export const Assets = () => {
+export const Providers = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [assetsPerPage] = useState(4); // Número de activos por página
+  const [providersPerPage] = useState(4); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
-  const filteredAssets = store.assets; // Manteniendo todos los activos sin filtrar
+  const filteredProviders = store.providers; // Manteniendo todos los activos sin filtrar
+  console.log(filteredProviders);
 
   // Calcular los índices para la paginación
-  const indexOfLastAsset = currentPage * assetsPerPage; // Último activo en la página actual
-  const indexOfFirstAsset = indexOfLastAsset - assetsPerPage; // Primer activo en la página actual
-  const currentAssets = filteredAssets.slice(
-    indexOfFirstAsset,
-    indexOfLastAsset
+  const indexOfLastProvider = currentPage * providersPerPage; // Último activo en la página actual
+  const indexOfFirstProvider = indexOfLastProvider - providersPerPage; // Primer activo en la página actual
+  const currentProviders = filteredProviders.slice(
+    indexOfFirstProvider,
+    indexOfLastProvider
   ); // Activos mostrados en la página actual
 
-  const totalPages = Math.ceil(filteredAssets.length / assetsPerPage); // Total de páginas
+  const totalPages = Math.ceil(filteredProviders.length / providersPerPage); // Total de páginas
   const paginate = (pageNumber) => setCurrentPage(pageNumber); // Función para cambiar de página
 
   // Función para manejar la paginación hacia adelante
@@ -50,10 +51,10 @@ export const Assets = () => {
     }
   }, [actions, navigate]);
 
-  const deleteAsset = (id) => {
+  const deleteProvider = (id) => {
     Swal.fire({
       title: "Advertencia",
-      text: "¿Desea eliminar el Activo?",
+      text: "¿Desea eliminar el Proveedor?",
       position: "center",
       icon: "error",
       showDenyButton: true,
@@ -64,11 +65,11 @@ export const Assets = () => {
       },
     }).then((click) => {
       if (click.isConfirmed) {
-        actions.deleteAsset(id);
+        actions.deleteProvider(id);
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Activo eliminado correctamente",
+          title: "Proveedor eliminado correctamente",
           showConfirmButton: false,
           timer: 1500,
           customClass: {
@@ -82,45 +83,43 @@ export const Assets = () => {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-end mb-3">
-        <CreateAssets />
+        <CreateProviders />
       </div>
-      {currentAssets.length > 0 ? (
+      {currentProviders.length > 0 ? (
         <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th>#</th>
-              <th>Tipo</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>N° Serie</th>
-              <th>N° Activo</th>
+              <th>Branch</th>
+              <th>Nombre</th>
+              <th>RFC</th>
+              <th>Servicio</th>
             </tr>
           </thead>
           <tbody>
-            {currentAssets.map((asset) => (
-              <tr key={asset.id}>
-                <td>{asset.id}</td>
-                <td>{asset.asset_type}</td>
-                <td>{asset.asset_brand}</td>
-                <td>{asset.asset_model}</td>
-                <td>{asset.asset_serial}</td>
-                <td>{asset.asset_inventory_number}</td>
+            {currentProviders.map((provider) => (
+              <tr key={provider.id}>
+                <td>{provider.id}</td>
+                <td>{provider.branch_id}</td>
+                <td>{provider.company_name}</td>
+                <td>{provider.rfc}</td>
+                <td>{provider.service}</td>
                 <td colSpan={2}>
                   <button
                     type="button"
                     className="btn me-5"
-                    onClick={() => deleteAsset(asset.id)}
+                    onClick={() => deleteProvider(provider.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
-                  <EditAssets asset={asset} />
+                  <EditProviders provider={provider} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p>No hay activos disponibles.</p>
+        <p>No hay proveedores disponibles.</p>
       )}
 
       {/* Controles de paginación */}
