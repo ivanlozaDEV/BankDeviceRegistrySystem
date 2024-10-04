@@ -1,63 +1,74 @@
-import React, { useContext, useState } from "react";
-import { Context } from "../store/appContext";
-import "../../styles/home.css";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../store/appContext"; // Adjust the path as needed
+import img from "../../img/drapp_logo.png";
 
-export const Home = () => {
+const Home = () => {
   const { store, actions } = useContext(Context);
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmitRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await actions.register(email, password);
-    if (response) {
-      console.log(response);
-      navigate("/login");
+    setError("");
+    console.log(userName);
+    console.log(password);
+    const success = await actions.login(userName, password);
+    if (success) {
+      navigate("/masterDashboard");
+    } else {
+      setError("Nombre de usuario o contraseña incorrectos");
     }
   };
 
   return (
-    <div className="mt-5">
-      <form className="cointainer card" onSubmit={handleSubmitRegister}>
-        <div className="card-body">
-          <h2 className="text-center">Register</h2>
+    <div className="container">
+      <div className="container col col-md-6">
+        <form
+          className="container card p-5 m-5 rounded-5 shadow-lg  border"
+          onSubmit={handleSubmit}
+        >
+          <div className="img-container m-auto pb-5">
+            {" "}
+            <img src={img} alt="DR-App" height={200} width={200} />
+          </div>
+          <h2 className="text-center">Iniciar Sesión</h2>
+          {error && <p className="error">{error}</p>}
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
+              Nombre de usuario
             </label>
             <input
-              type="email"
               className="form-control"
-              id="exampleInputEmail1"
-              value={email}
-              aria-describedby="emailHelp"
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="user_name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
             />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
-            </div>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
+              Contraseña
             </label>
             <input
-              type="password"
               className="form-control"
-              id="exampleInputPassword1"
+              type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
+          <button type="submit" className="btn btn-primary mt-3">
+            Enviar
           </button>
-          <hr className="my-5" />
-          <Link to="/login">Posees una cuenta? haz click aqui</Link>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };
+
+export default Home;

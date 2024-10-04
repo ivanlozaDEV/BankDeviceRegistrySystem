@@ -11,13 +11,14 @@ class User(db.Model):
     last_names = db.Column(db.String(50), unique=False, nullable=False)
     employee_number = db.Column(db.String(20), unique=True, nullable=False)
     subzone = db.Column(db.String(50), unique=False, nullable=False)
+    role = db.Column(db.String(50), unique=False, nullable=False)
 
     providers = db.relationship('Provider', backref='user', lazy=True)
     branch= db.relationship('Branch', backref='user', lazy=True)
     assets = db.relationship('Assets', backref='user', lazy=True)
 
     def __repr__(self):
-        return f'<User {self.user_id}>'
+        return f'<User {self.user_name}>'
 
     def serialize(self):
         return {
@@ -28,6 +29,7 @@ class User(db.Model):
             "last_names": self.last_names,
             "employee_number": self.employee_number,
             "subzone": self.subzone,
+            "role": self.role,
             "providers": [provider.serialize() for provider in self.providers],
             "assets": [asset.serialize() for asset in self.assets]
         }
@@ -41,7 +43,7 @@ class Provider(db.Model):
     assets= db.relationship('Assets', backref='provider', lazy=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
+    branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=True)
 
     def __repr__(self):
         return f'<Provider {self.company_name}>'
@@ -49,6 +51,7 @@ class Provider(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "branch_id": self.branch_id,
             "company_name": self.company_name,
             "rfc": self.rfc,
             "user_id": self.user_id,
@@ -66,6 +69,7 @@ class Migration(db.Model):
 
     
     assets = db.relationship('Assets', backref='migration', lazy=True)
+    
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     provider_id = db.Column(db.Integer, db.ForeignKey('provider.id'), nullable=False)
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
@@ -86,8 +90,6 @@ class Migration(db.Model):
             "assets": [asset.serialize() for asset in self.assets]
         }
 
-
-    
     
 class Branch(db.Model):
     id=db.Column(db.Integer, primary_key=True)
