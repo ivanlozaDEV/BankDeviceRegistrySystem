@@ -1,32 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext.js";
 import { useNavigate } from "react-router-dom";
-import { CreateProviders } from "../component/CreateProviders.jsx";
-import { EditProviders } from "../component/EditProviders.jsx";
+import { CreateBranches } from "../component/CreateBranches.jsx";
+import { EditBranches } from "../component/EditBranches.jsx";
 import Swal from "sweetalert2";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 
-export const Providers = () => {
+export const Branches = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [providersPerPage] = useState(4); // Número de activos por página
+  const [branchesPerPage] = useState(4); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
-  const filteredProviders = store.providers; // Manteniendo todos los activos sin filtrar
-  console.log(filteredProviders);
+  const filteredBranches = store.branchs; // Manteniendo todos los activos sin filtrar
+  console.log(filteredBranches);
 
   // Calcular los índices para la paginación
-  const indexOfLastProvider = currentPage * providersPerPage; // Último activo en la página actual
-  const indexOfFirstProvider = indexOfLastProvider - providersPerPage; // Primer activo en la página actual
-  const currentProviders = filteredProviders.slice(
-    indexOfFirstProvider,
-    indexOfLastProvider
+  const indexOfLastBranch = currentPage * branchesPerPage; // Último activo en la página actual
+  const indexOfFirstBranch = indexOfLastBranch - branchesPerPage; // Primer activo en la página actual
+  const currentBranches = filteredBranches.slice(
+    indexOfFirstBranch,
+    indexOfLastBranch
   ); // Activos mostrados en la página actual
 
-  const totalPages = Math.ceil(filteredProviders.length / providersPerPage); // Total de páginas
+  const totalPages = Math.ceil(filteredBranches.length / branchesPerPage); // Total de páginas
   const paginate = (pageNumber) => setCurrentPage(pageNumber); // Función para cambiar de página
 
   // Función para manejar la paginación hacia adelante
@@ -51,10 +51,10 @@ export const Providers = () => {
     }
   }, [actions, navigate]);
 
-  const deleteProvider = (id) => {
+  const deleteBranch = (id) => {
     Swal.fire({
       title: "Advertencia",
-      text: "¿Desea eliminar el Proveedor?",
+      text: "¿Desea eliminar la Sucursal?",
       position: "center",
       icon: "error",
       showDenyButton: true,
@@ -69,7 +69,7 @@ export const Providers = () => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Proveedor eliminado correctamente",
+          title: "Sucursal eliminada correctamente",
           showConfirmButton: false,
           timer: 1500,
           customClass: {
@@ -83,43 +83,44 @@ export const Providers = () => {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-end mb-3">
-        <CreateProviders />
+        <CreateBranches />
       </div>
-      {currentProviders.length > 0 ? (
+      {currentBranches.length > 0 ? (
         <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th>#</th>
-              <th>Branch</th>
-              <th>Nombre</th>
-              <th>RFC</th>
-              <th>Servicio</th>
+              <th>CR</th>
+              <th>Dirección</th>
+              <th>Zona</th>
+              <th>Subzona</th>
             </tr>
           </thead>
           <tbody>
-            {currentProviders.map((provider) => (
-              <tr key={provider.id}>
-                <td>{provider.id}</td>
-                <td>{provider.branch_id}</td>
-                <td>{provider.company_name}</td>
-                <td>{provider.rfc}</td>
-                <td>{provider.service}</td>
+            {currentBranches.map((branch) => (
+              <tr key={branch.id}>
+                <td>{branch.id}</td>
+                <td>{branch.branch_cr}</td>
+                <td>{branch.branch_address}</td>
+                <td>{branch.branch_zone}</td>
+                <td>{branch.branch_subzone}</td>
+
                 <td colSpan={2}>
                   <button
                     type="button"
                     className="btn me-5"
-                    onClick={() => deleteProvider(provider.id)}
+                    onClick={() => deleteBranch(branch.id)}
                   >
                     <i className="fa-solid fa-trash"></i>
                   </button>
-                  <EditProviders provider={provider} />
+                  <EditBranches branch={branch} />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
-        <p>No hay proveedores disponibles.</p>
+        <p>No hay sucursales disponibles.</p>
       )}
 
       {/* Controles de paginación */}

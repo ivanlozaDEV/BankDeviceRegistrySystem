@@ -178,7 +178,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           if (response.ok) {
             console.log(data);
-            setStore({ btanchs: data.branchs });
+            setStore({ branchs: data.branchs });
           }
         } catch (error) {
           console.log(error);
