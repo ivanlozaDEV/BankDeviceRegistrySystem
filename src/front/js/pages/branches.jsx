@@ -43,13 +43,26 @@ export const Branches = () => {
     }
   };
 
+  const getTokenInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.sub.role;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     if (!jwt) {
-      navigate("/login");
+      navigate("/");
       return;
     }
-  }, [actions, navigate]);
+    getTokenInfo();
+  }, []);
 
   const deleteBranch = (id) => {
     Swal.fire({

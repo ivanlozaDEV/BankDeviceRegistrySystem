@@ -42,13 +42,26 @@ export const Assets = () => {
     }
   };
 
+  const getTokenInfo = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    try {
+      const decodedToken = jwtDecode(token);
+      return decodedToken.sub.role;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     if (!jwt) {
-      navigate("/login");
+      navigate("/");
       return;
+      getTokenInfo();
     }
-  }, [actions, navigate]);
+  }, []);
 
   const deleteAsset = (id) => {
     Swal.fire({
@@ -85,7 +98,7 @@ export const Assets = () => {
         <CreateAssets />
       </div>
       {currentAssets.length > 0 ? (
-        <div className="row m-0 p-0 overflow-auto">
+        <div className="row overflow-auto">
           <table className="table table-striped table-hover table-bordered table-responsive text-center">
             <thead>
               <tr>
