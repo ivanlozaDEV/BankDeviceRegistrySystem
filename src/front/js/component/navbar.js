@@ -40,7 +40,7 @@ export const Navbar = () => {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon">
-          <i class="fa-solid fa-bars fs-3"></i>
+          <i class="fa-solid fa-bars fs-3 text-white"></i>
         </span>
       </button>
       <div className="collapse navbar-collapse pe-2" id="navbarNavDropdown">
@@ -55,10 +55,10 @@ export const Navbar = () => {
             />
           </Link>
         </div>
-        <ul className="navbar-nav">
+        <ul className="navbar-nav ms-auto">
           <li className="nav-item dropdown">
             <a
-              className="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle text-white"
               href="#"
               role="button"
               data-bs-toggle="dropdown"
@@ -114,13 +114,13 @@ export const Navbar = () => {
             </ul>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <a className="nav-link text-white" href="#">
               Features
             </a>
           </li>
           <li className="nav-item">
             <button className="btn" onClick={(e) => logout(e)}>
-              <i className="fa-solid fa-right-from-bracket fs-4 text-danger"></i>
+              <i className="fa-solid fa-right-from-bracket fs-4 text-white"></i>
             </button>
           </li>
         </ul>

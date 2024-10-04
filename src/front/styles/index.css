@@ -5,3 +5,8 @@
   margin: 0;
   padding: 0;
 }
+
+.navbar {
+  background: linear-gradient(99deg, rgb(0, 0, 70), rgb(0, 0, 168));
+  box-shadow: 5px 5px 10px rgb(0, 0, 168);
+}
