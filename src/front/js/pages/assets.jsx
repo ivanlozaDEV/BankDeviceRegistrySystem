@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { CreateAssets } from "../component/CreateAssets.jsx";
 import { EditAssets } from "../component/EditAssets.jsx";
 import { jwtDecode } from "jwt-decode";
-
 import Swal from "sweetalert2";
 import useTokenExpiration from "../../../hooks/useTokenExpiration.jsx";
 
@@ -30,14 +29,12 @@ export const Assets = () => {
   const totalPages = Math.ceil(filteredAssets.length / assetsPerPage); // Total de páginas
   const paginate = (pageNumber) => setCurrentPage(pageNumber); // Función para cambiar de página
 
-  // Función para manejar la paginación hacia adelante
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Función para manejar la paginación hacia atrás
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -60,8 +57,6 @@ export const Assets = () => {
     const jwt = localStorage.getItem("token");
     if (!jwt) {
       navigate("/");
-      return;
-      getTokenInfo();
     }
   }, []);
 
@@ -95,10 +90,11 @@ export const Assets = () => {
   };
 
   return (
-    <div className="container mt-5 ">
+    <div className="container mt-5">
       <div className="d-flex justify-content-end mb-3">
         <CreateAssets />
       </div>
+
       {currentAssets.length > 0 ? (
         <div className="row overflow-auto">
           <table className="table table-striped table-hover table-bordered table-responsive text-center">
@@ -108,15 +104,15 @@ export const Assets = () => {
                 <th>Tipo</th>
                 <th>Marca</th>
                 <th>Modelo</th>
-                <th>N° Serie</th>
-                <th>N° Activo</th>
+                <th>N.° Serie</th>
+                <th>N.° Activo</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               {currentAssets.map((asset, index) => (
                 <tr key={asset.id}>
-                  <td>{index + 1}</td>
+                  <td>{asset.id}</td>
                   <td>{asset.asset_type}</td>
                   <td>{asset.asset_brand}</td>
                   <td>{asset.asset_model}</td>
@@ -141,22 +137,19 @@ export const Assets = () => {
         <p>No hay activos disponibles.</p>
       )}
 
-      {/* Controles de paginación */}
       <nav>
         <ul className="pagination justify-content-center">
-          {/* Botón de página anterior */}
           <li className="page-item">
             <button
               className="page-link"
               onClick={handlePrevPage}
               disabled={currentPage === 1}
             >
-              &laquo; {/* Flecha izquierda */}
+              &laquo;
             </button>
           </li>
-          {/* Botones para cada número de página */}
-          {[...Array(totalPages)].map((_, index) => (
-            <li className="page-item" key={index}>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <li key={index} className="page-item">
               <button
                 className={`page-link ${
                   currentPage === index + 1 ? "active" : ""
@@ -167,14 +160,13 @@ export const Assets = () => {
               </button>
             </li>
           ))}
-          {/* Botón de página siguiente */}
           <li className="page-item">
             <button
               className="page-link"
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
             >
-              &raquo; {/* Flecha derecha */}
+              &raquo;
             </button>
           </li>
         </ul>

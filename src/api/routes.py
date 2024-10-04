@@ -101,7 +101,7 @@ def get_me():
 
 @api.route('/users', methods=['GET'])
 def get_all_users():
-    users = User.query.all()
+    users = User.query.order_by(User.id.asc()).all()
     if not users:
         return jsonify({"error": "Users not found"}), 404
     users_data = [user.serialize() for user in users]
@@ -111,7 +111,7 @@ def get_all_users():
 
 @api.route('/providers', methods=['GET'])
 def get_providers():
-    providers = Provider.query.all()
+    providers = Provider.query.order_by(Provider.id.asc()).all()
     if not providers:
         return jsonify({"error": "Providers not found"}), 404
     providers_data = [provider.serialize() for provider in providers]
@@ -121,7 +121,7 @@ def get_providers():
 
 @api.route('/branchs', methods=['GET'])
 def get_branchs():
-    branchs = Branch.query.all()
+    branchs = Branch.query.order_by(Branch.id.asc()).all()
     if not branchs:
         return jsonify({"error": "Branchs not found"}), 404
     branchs_data = [branch.serialize() for branch in branchs]
@@ -131,7 +131,7 @@ def get_branchs():
 
 @api.route('/assets', methods=['GET'])
 def get_assets():
-    assets = Assets.query.all()
+    assets = Assets.query.order_by(Assets.id.asc()).all()
     if not assets:
         return jsonify({"error": "Assets not found"}), 404
     assets_data = [asset.serialize() for asset in assets]
@@ -141,7 +141,7 @@ def get_assets():
 
 @api.route('/usersMB', methods=['GET'])
 def get_usersMB():
-    usersMB = UserMB.query.all()
+    usersMB = UserMB.query.order_by(UserMB.id.asc()).all()
     if not usersMB:
         return jsonify({"error": "usersMB not found"}), 404
     usersMB_data = [userMB.serialize() for userMB in usersMB]
@@ -151,7 +151,7 @@ def get_usersMB():
 
 @api.route('/migrations', methods=['GET'])
 def get_migrations():
-    migrations = Migration.query.all()
+    migrations = Migration.query.order_by(Migration.id.asc()).all()
     if not migrations:
         return jsonify({"error": "Migrations not found"}), 404
     migrations_data = [migration.serialize() for migration in migrations]

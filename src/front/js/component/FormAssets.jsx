@@ -189,7 +189,7 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
           />
         </div>
         <select
-          className="form-select"
+          className="form-select col-6"
           name="provider_id"
           aria-label="Default select example"
           value={asset.provider_id}
