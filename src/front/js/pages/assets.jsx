@@ -114,9 +114,9 @@ export const Assets = () => {
               </tr>
             </thead>
             <tbody>
-              {currentAssets.map((asset) => (
+              {currentAssets.map((asset, index) => (
                 <tr key={asset.id}>
-                  <td>{asset.id}</td>
+                  <td>{index + 1}</td>
                   <td>{asset.asset_type}</td>
                   <td>{asset.asset_brand}</td>
                   <td>{asset.asset_model}</td>
