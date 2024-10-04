@@ -48,7 +48,6 @@ export const Assets = () => {
       navigate("/login");
       return;
     }
-    actions.getAssets();
   }, [actions, navigate]);
 
   const deleteAsset = (id) => {

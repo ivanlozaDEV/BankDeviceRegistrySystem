@@ -80,8 +80,15 @@ export const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Agregar Branch
+                <a
+                  className={
+                    getTokenInfo() !== "Master" && getTokenInfo() !== "Admin"
+                      ? "d-none"
+                      : "dropdown-item"
+                  }
+                  onClick={(e) => navigate("/branches")}
+                >
+                  Sucursales
                 </a>
               </li>
               <li>
