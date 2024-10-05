@@ -79,16 +79,17 @@ export const Providers = () => {
       },
     }).then((click) => {
       if (click.isConfirmed) {
-        actions.deleteProvider(id);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Proveedor eliminado correctamente",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            container: "custom-container",
-          },
+        actions.deleteProvider(id).then(() => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Proveedor eliminado correctamente",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              container: "custom-container",
+            },
+          });
         });
       }
     });
@@ -108,6 +109,7 @@ export const Providers = () => {
               <th>Nombre</th>
               <th>RFC</th>
               <th>Servicio</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -118,7 +120,7 @@ export const Providers = () => {
                 <td>{provider.company_name}</td>
                 <td>{provider.rfc}</td>
                 <td>{provider.service}</td>
-                <td colSpan={2}>
+                <td>
                   <button
                     type="button"
                     className="btn me-5"

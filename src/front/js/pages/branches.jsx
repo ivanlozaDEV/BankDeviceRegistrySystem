@@ -79,7 +79,7 @@ export const Branches = () => {
       },
     }).then((click) => {
       if (click.isConfirmed) {
-        actions.deleteProvider(id);
+        actions.deleteBranch(id);
         Swal.fire({
           position: "center",
           icon: "success",

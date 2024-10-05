@@ -548,7 +548,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // EDIT PROVIDER
 
-      editProvider: async (id, company_name, rfc, service) => {
+      editProvider: async (id, branch, company_name, rfc, service) => {
         const jwt = localStorage.getItem("token");
         const actions = getActions();
         try {
@@ -561,6 +561,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 authorization: `Bearer ${jwt}`,
               },
               body: JSON.stringify({
+                branch,
                 id,
                 company_name,
                 rfc,
