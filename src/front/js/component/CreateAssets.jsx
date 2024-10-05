@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { FormAssets } from "./FormAssets.jsx";
 import Swal from "sweetalert2";
@@ -7,14 +6,14 @@ import * as XLSX from "xlsx"; // Importamos la librería xlsx para leer el archi
 
 export const CreateAssets = () => {
   const [file, setFile] = useState(null); // Estado para almacenar el archivo seleccionado
-  const [provider_id, SetProviderId] = useState("");
+  const [provider_id, setProviderId] = useState("");
   const { store, actions } = useContext(Context);
+
   // Función para manejar la carga de archivos Excel
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  // Función para procesar el archivo Excel y agregar los datos
   // Función para procesar el archivo Excel y agregar los datos
   const handleFileUpload = () => {
     if (!file) {
@@ -69,14 +68,6 @@ export const CreateAssets = () => {
           asset_serial,
           asset_inventory_number,
         ] = row;
-        console.log(
-          asset_type,
-          asset_brand,
-          asset_model,
-          asset_serial,
-          asset_inventory_number,
-          provider_id
-        );
 
         actions.add_asset(
           asset_type,
@@ -97,6 +88,7 @@ export const CreateAssets = () => {
 
     reader.readAsArrayBuffer(file);
   };
+
   return (
     <>
       <button
@@ -115,7 +107,7 @@ export const CreateAssets = () => {
         aria-labelledby="createAssetModal"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="createAssetModal">
@@ -128,44 +120,45 @@ export const CreateAssets = () => {
                 aria-label="Close"
               ></button>
             </div>
-            {/* Input para cargar archivo Excel */}
-            <div className="mb-3 p-3">
+            <div className="modal-body">
+              {/* Input para cargar archivo Excel */}
               <h5>Cargar Archivo Excel</h5>
-              <div className="d-flex justify-content-between">
-                <input
-                  className="col-6"
-                  type="file"
-                  accept=".xlsx"
-                  onChange={handleFileChange}
-                />
-                <div className="col-6">
-                  <select
-                    className="form-select"
-                    name="provider_id"
-                    aria-label="Default select example"
-                    value={provider_id}
-                    onChange={(e) => SetProviderId(e.target.value)}
-                    required
-                  >
-                    <option value="">Selecciona un provedor</option>
-                    {store.providers.map((provider) => {
-                      return (
+              <div className="mb-3">
+                <div className="row">
+                  <div className="col-12 col-md-8">
+                    <input
+                      className="form-control"
+                      type="file"
+                      accept=".xlsx"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                  <div className="col-12 col-md-4">
+                    <select
+                      className="form-select"
+                      name="provider_id"
+                      aria-label="Seleccionar proveedor"
+                      value={provider_id}
+                      onChange={(e) => setProviderId(e.target.value)}
+                      required
+                    >
+                      <option value="">Selecciona un proveedor</option>
+                      {store.providers.map((provider) => (
                         <option key={provider.id} value={provider.id}>
                           {provider.company_name}
                         </option>
-                      );
-                    })}
-                  </select>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+                <button
+                  onClick={handleFileUpload}
+                  className="btn btn-primary w-100 mt-2"
+                >
+                  Cargar Archivo Excel
+                </button>
               </div>
-              <button
-                onClick={handleFileUpload}
-                className="btn btn-primary mt-2"
-              >
-                Cargar Archivo Excel
-              </button>
-            </div>
-            <div className="modal-body">
+
               <h5>Formulario de Agregar Activo</h5>
               <FormAssets btnAsset={"Crear"} />
             </div>

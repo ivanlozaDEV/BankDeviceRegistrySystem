@@ -142,78 +142,78 @@ export const FormUsers = ({ id, btnUser, user: initialUser }) => {
     <>
       <form className="row g-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
-          <label htmlhtmlFor="inputUsername" className="form-label">
+          <label htmlFor="inputUsername" className="form-label">
             Nombre de Usuario
           </label>
           <input
             type="text"
             className="form-control"
-            id="inputUsername"
+            id={user.user_name + "inputUsername"}
             value={user.user_name}
             name="user_name"
             onChange={handleChange}
           />
         </div>
         <div className="col-md-6">
-          <label htmlhtmlFor="inputContrasena" className="form-label">
+          <label htmlFor="inputContrasena" className="form-label">
             Contraseña
           </label>
           <input
             type="password"
             className="form-control"
-            id="inputContrasena"
+            id={user.user_name + "inputContrasena"}
             value={user.password}
             name="password"
             onChange={handleChange}
           />
         </div>
         <div className="col-md-6">
-          <label htmlhtmlFor="inputNombres" className="form-label">
+          <label htmlFor="inputNombres" className="form-label">
             Nombres
           </label>
           <input
             type="text"
             className="form-control"
-            id="inputNombres"
+            id={user.user_name + "inputNombres"}
             value={user.names}
             name="names"
             onChange={handleChange}
           />
         </div>
         <div className="col-md-6">
-          <label htmlhtmlFor="inputApellidos" className="form-label">
+          <label htmlFor="inputApellidos" className="form-label">
             Apellidos
           </label>
           <input
             type="text"
             className="form-control"
-            id="inputApellidos"
+            id={user.user_name + "inputApellidos"}
             value={user.last_names}
             name="last_names"
             onChange={handleChange}
           />
         </div>
         <div className="col-md-6">
-          <label htmlhtmlFor="inputNumeroDeEmpleado" className="form-label">
+          <label htmlFor="inputNumeroDeEmpleado" className="form-label">
             Número de Empleado
           </label>
           <input
             type="text"
             className="form-control"
-            id="inputNumeroDeEmpleado"
+            id={user.user_name + "inputNumeroDeEmpleado"}
             value={user.employee_number}
             name="employee_number"
             onChange={handleChange}
           />
         </div>
         <div className="col-6">
-          <label htmlhtmlFor="inputSubzona" className="form-label">
+          <label htmlFor="inputSubzona" className="form-label">
             Subzona
           </label>
           <input
             type="text"
             className="form-control"
-            id="inputSubzona"
+            id={user.user_name + "inputSubzona"}
             value={user.subzone}
             name="subzone"
             onChange={handleChange}
@@ -241,7 +241,7 @@ export const FormUsers = ({ id, btnUser, user: initialUser }) => {
         <div className="col-md-6 form-check form-switch mt-2">
           <label
             className="form-check-label mt-1"
-            htmlhtmlFor="flexSwitchCheckDefault"
+            htmlFor="flexSwitchCheckDefault"
           >
             Activo
           </label>
@@ -251,7 +251,7 @@ export const FormUsers = ({ id, btnUser, user: initialUser }) => {
             role="switch"
             name="is_active"
             value={user.is_active}
-            id="is_active"
+            id={user.user_name + "is_active"}
             checked={user.is_active ? user.is_active : false}
             onChange={setIs_activeOnOff}
           />

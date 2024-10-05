@@ -330,9 +330,14 @@ def edit_user():
         user_data = get_jwt_identity()
         current_user_role = user_data["role"]
 
+
+        if current_user_role != "Master" and user.role == "Master":
+            return jsonify({"error": "Solo el usuario master puede editar Masters"}), 403
+        if current_user_role != "Master" and user.role == "Admin":
+            return jsonify({"error": "Solo el usuario master puede editar Administradores"}), 403
         if current_user_role not in ["Master", "Admin"]:
+            
             return jsonify({"error": "No tienes permisos para realizar esta acción"}), 403
-        
         if user is None:
             return jsonify({"error": "User not found"}), 404
         

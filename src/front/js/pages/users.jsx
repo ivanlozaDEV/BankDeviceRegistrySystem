@@ -84,7 +84,7 @@ export const Users = () => {
           </thead>
           <tbody>
             {currentUsers.map((user, index) => (
-              <tr key={user.id}>
+              <tr key={user.id + index}>
                 <td>{indexOfFirstUser + index + 1}</td>
                 <td>{user.user_name}</td>
                 <td>{user.names}</td>
