@@ -45,16 +45,17 @@ export const FormUsers = ({ id, btnUser, user: initialUser }) => {
     });
     try {
       const response = id
-        ? (await actions.editMe) ==
-          (id,
-          user.user_name,
-          user.password,
-          user.names,
-          user.last_names,
-          user.employee_number,
-          user.subzone,
-          user.is_active,
-          user.role)
+        ? await actions.editMe(
+            id,
+            user.user_name,
+            user.password,
+            user.names,
+            user.last_names,
+            user.employee_number,
+            user.subzone,
+            user.is_active,
+            user.role
+          )
         : await actions.register(
             user.user_name,
             user.password,

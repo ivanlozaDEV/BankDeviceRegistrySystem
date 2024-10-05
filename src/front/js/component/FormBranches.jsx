@@ -41,12 +41,13 @@ export const FormBranches = ({ id, btnBranch, branch: initialBranch }) => {
     });
     try {
       const response = id
-        ? (await actions.editBranch) ==
-          (id,
-          branch.branch_cr,
-          branch.branch_address,
-          branch.branch_zone,
-          branch.branch_subzone)
+        ? await actions.editBranch(
+            id,
+            branch.branch_cr,
+            branch.branch_address,
+            branch.branch_zone,
+            branch.branch_subzone
+          )
         : await actions.add_branch(
             branch.branch_cr,
             branch.branch_address,

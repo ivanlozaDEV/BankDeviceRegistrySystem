@@ -51,7 +51,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!response.ok) {
             return false;
           }
-          const data = response.json();
+          const data = await response.json();
           console.log(data);
           return data;
         } catch (error) {
