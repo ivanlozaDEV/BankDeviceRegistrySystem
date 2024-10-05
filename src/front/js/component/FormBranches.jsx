@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
 
-export const FormBranches = ({ id, btnBranch, provider: initialBranch }) => {
+export const FormBranches = ({ id, btnBranch, branch: initialBranch }) => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [branch, setBranch] = useState({
