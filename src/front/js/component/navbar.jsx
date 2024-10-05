@@ -74,9 +74,9 @@ export const Navbar = () => {
                       ? "d-none"
                       : "dropdown-item"
                   }
-                  onClick={(e) => navigate("/register")}
+                  onClick={(e) => navigate("/users")}
                 >
-                  Registro Usuario
+                  Usuarios
                 </a>
               </li>
               <li>

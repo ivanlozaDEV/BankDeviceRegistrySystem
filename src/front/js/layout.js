@@ -10,6 +10,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer";
 import MasterDashboard from "./pages/masterDashboard.jsx";
+import { Users } from "./pages/users.jsx";
 import { Assets } from "./pages/assets.jsx";
 import { Providers } from "./pages/providers.jsx";
 import { Branches } from "./pages/branches.jsx";
@@ -29,7 +30,7 @@ const Layout = () => {
         <Routes>
           <Route element={<Home />} path="/" />
           <Route element={<MasterDashboard />} path="/masterDashboard" />
-          <Route element={<Register />} path="/register" />
+          <Route element={<Users />} path="/users" />
           <Route element={<Assets />} path="/assets" />
           <Route element={<Providers />} path="/providers" />
           <Route element={<Branches />} path="/branches" />
