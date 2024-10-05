@@ -11,13 +11,12 @@ export const Branches = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [branchesPerPage] = useState(4); // Número de activos por página
+  const [branchesPerPage] = useState(10); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
   const filteredBranches = store.branchs; // Manteniendo todos los activos sin filtrar
-  console.log(filteredBranches);
 
   // Calcular los índices para la paginación
   const indexOfLastBranch = currentPage * branchesPerPage; // Último activo en la página actual
@@ -111,9 +110,9 @@ export const Branches = () => {
             </tr>
           </thead>
           <tbody>
-            {currentBranches.map((branch) => (
+            {currentBranches.map((branch, index) => (
               <tr key={branch.id}>
-                <td>{branch.id}</td>
+                <td>{indexOfFirstBranch + index + 1}</td>
                 <td>{branch.branch_cr}</td>
                 <td>{branch.branch_address}</td>
                 <td>{branch.branch_zone}</td>

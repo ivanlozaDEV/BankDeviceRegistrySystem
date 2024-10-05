@@ -112,53 +112,53 @@ export const FormBranches = ({ id, btnBranch, branch: initialBranch }) => {
   }, []);
   return (
     <>
-      <form class="row g-3" onSubmit={handleSubmit}>
-        <div class="col-md-6">
-          <label for="inputCR" class="form-label">
+      <form className="row g-3" onSubmit={handleSubmit}>
+        <div className="col-md-6">
+          <label htmlFor="inputCR" className="form-label">
             CR
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputCR"
             value={branch.branch_cr}
             name="branch_cr"
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="inputDireccion" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputDireccion" className="form-label">
             Dirección de la sucursal
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputDireccion"
             value={branch.branch_address}
             name="branch_address"
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="inputZona" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputZona" className="form-label">
             Zona
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputZona"
             value={branch.branch_zone}
             name="branch_zone"
             onChange={handleChange}
           />
         </div>
-        <div class="col-6">
-          <label for="inputSubzona" class="form-label">
+        <div className="col-6">
+          <label htmlFor="inputSubzona" className="form-label">
             Subzona
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputSubzona"
             value={branch.branch_subzone}
             name="branch_subzone"

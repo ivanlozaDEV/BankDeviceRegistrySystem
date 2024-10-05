@@ -11,7 +11,7 @@ export const Assets = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [assetsPerPage] = useState(4); // Número de activos por página
+  const [assetsPerPage] = useState(10); // Número de activos por página
 
   useTokenExpiration();
 
@@ -58,6 +58,7 @@ export const Assets = () => {
     if (!jwt) {
       navigate("/");
     }
+    getTokenInfo();
   }, []);
 
   const deleteAsset = (id) => {
@@ -112,7 +113,7 @@ export const Assets = () => {
             <tbody>
               {currentAssets.map((asset, index) => (
                 <tr key={asset.id}>
-                  <td>{asset.id}</td>
+                  <td>{indexOfFirstAsset + index + 1}</td>
                   <td>{asset.asset_type}</td>
                   <td>{asset.asset_brand}</td>
                   <td>{asset.asset_model}</td>

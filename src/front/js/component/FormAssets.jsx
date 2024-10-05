@@ -122,66 +122,66 @@ export const FormAssets = ({ id, btnAsset, asset: initialAsset }) => {
   }, []);
   return (
     <>
-      <form class="row g-3" onSubmit={handleSubmit}>
-        <div class="col-md-6">
-          <label for="inputTipo" class="form-label">
+      <form className="row g-3" onSubmit={handleSubmit}>
+        <div className="col-md-6">
+          <label htmlFor="inputTipo" className="form-label">
             Tipo de Activo
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputTipo"
             value={asset.asset_type}
             name="asset_type"
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="inputMarca" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputMarca" className="form-label">
             Marca
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputMarca"
             value={asset.asset_brand}
             name="asset_brand"
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="inputModelo" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputModelo" className="form-label">
             Modelo
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputModelo"
             value={asset.asset_model}
             name="asset_model"
             onChange={handleChange}
           />
         </div>
-        <div class="col-6">
-          <label for="inputSerie" class="form-label">
+        <div className="col-6">
+          <label htmlFor="inputSerie" className="form-label">
             N° Serie
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputSerie"
             value={asset.asset_serial}
             name="asset_serial"
             onChange={handleChange}
           />
         </div>
-        <div class="col-6">
-          <label for="inputActivo" class="form-label">
+        <div className="col-6">
+          <label htmlFor="inputActivo" className="form-label">
             N° Activo
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputActivo"
             value={asset.asset_inventory_number}
             name="asset_inventory_number"

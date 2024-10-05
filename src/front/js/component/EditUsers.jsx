@@ -9,7 +9,7 @@ export const EditUsers = ({ user }) => {
     <>
       <button
         type="button"
-        class="btn"
+        className="btn"
         data-bs-toggle="modal"
         data-bs-target={`#edit-user-${user.id}`}
       >
@@ -17,32 +17,32 @@ export const EditUsers = ({ user }) => {
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id={`edit-user-${user.id}`}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby={`edit-user-${user.id}`}
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id={`edit-user-${user.id}`}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id={`edit-user-${user.id}`}>
                 Editar Usuario
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <FormUsers btnUser={"Actualizar"} user={user} id={user.id} />
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close

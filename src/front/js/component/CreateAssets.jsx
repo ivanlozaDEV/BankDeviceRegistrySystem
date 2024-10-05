@@ -101,7 +101,7 @@ export const CreateAssets = () => {
     <>
       <button
         type="button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#createAssetModal"
       >
@@ -109,21 +109,21 @@ export const CreateAssets = () => {
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="createAssetModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="createAssetModal"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createAssetModal">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="createAssetModal">
                 Crear Activo
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
@@ -165,7 +165,7 @@ export const CreateAssets = () => {
                 Cargar Archivo Excel
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <h5>Formulario de Agregar Activo</h5>
               <FormAssets btnAsset={"Crear"} />
             </div>

@@ -116,8 +116,8 @@ export const FormProviders = ({
   }, []);
   return (
     <>
-      <form class="row g-3" onSubmit={handleSubmit}>
-        <div class="col-md-6">
+      <form className="row g-3" onSubmit={handleSubmit}>
+        <div className="col-md-6">
           <select
             className="form-select"
             name="branch_id"
@@ -136,39 +136,39 @@ export const FormProviders = ({
             })}
           </select>
         </div>
-        <div class="col-md-6">
-          <label for="inputNombreDeCompania" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputNombreDeCompania" className="form-label">
             Nombre de la Compañia
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputNOmbreDeCompania"
             value={provider.company_name}
             name="company_name"
             onChange={handleChange}
           />
         </div>
-        <div class="col-md-6">
-          <label for="inputRFC" class="form-label">
+        <div className="col-md-6">
+          <label htmlFor="inputRFC" className="form-label">
             RFC
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputRFC"
             value={provider.rfc}
             name="rfc"
             onChange={handleChange}
           />
         </div>
-        <div class="col-6">
-          <label for="inputServicio" class="form-label">
+        <div className="col-6">
+          <label htmlFor="inputServicio" className="form-label">
             Servicio
           </label>
           <input
             type="text"
-            class="form-control"
+            className="form-control"
             id="inputServicio"
             value={provider.service}
             name="service"

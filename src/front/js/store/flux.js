@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       assets: [],
       usersMB: [],
       migrations: [],
-      rol: ["Master", "Admin", "Ingeniero de Campo"],
+      role: ["Master", "Admin", "Ingeniero de Campo"],
     },
     actions: {
       ////////////  USER SECTION //////////////////
@@ -27,6 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         role
       ) => {
         const jwt = localStorage.getItem("token");
+        const actions = getActions();
         try {
           const response = await fetch(
             process.env.BACKEND_URL + "/api/signup",
@@ -52,7 +53,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             return false;
           }
           const data = await response.json();
-          console.log(data);
+          actions.getUsers();
+
           return data;
         } catch (error) {
           console.log(error);
@@ -127,8 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
-            setStore({ users: data });
+            setStore({ users: data.users });
           }
         } catch (error) {
           console.log(error);
@@ -152,7 +153,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
             setStore({ providers: data.providers });
           }
         } catch (error) {
@@ -177,7 +177,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
             setStore({ branchs: data.branchs });
           }
         } catch (error) {
@@ -202,7 +201,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
             setStore({ assets: data.assets });
           }
         } catch (error) {
@@ -227,7 +225,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
             setStore({ usersMB: data.usersMB });
           }
         } catch (error) {
@@ -252,7 +249,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           if (response.ok) {
-            console.log(data);
             setStore({ migrations: data.migrations });
           }
         } catch (error) {
@@ -462,22 +458,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       ////////////  EDIT SECTION //////////////////
 
-      //EDIT ME
+      //EDIT USER
 
-      editMe: async (
+      editUser: async (
+        id,
         user_name,
         password,
         names,
         last_names,
         employee_number,
         subzone,
-        is_active
+        is_active,
+        role
       ) => {
         const jwt = localStorage.getItem("token");
         const actions = getActions();
         try {
           const response = await fetch(
-            process.env.BACKEND_URL + "/api/edit_me",
+            process.env.BACKEND_URL + "/api/editUser",
             {
               method: "PUT",
               headers: {
@@ -485,6 +483,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 authorization: `Bearer ${jwt}`,
               },
               body: JSON.stringify({
+                id,
                 user_name,
                 password,
                 names,
@@ -492,6 +491,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 employee_number,
                 subzone,
                 is_active,
+                role,
               }),
             }
           );
@@ -499,7 +499,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.log(response);
           }
           const data = await response.json();
-          actions.getMe();
+          actions.getUsers();
           return data;
         } catch (error) {
           console.log(error);

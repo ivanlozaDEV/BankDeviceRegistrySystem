@@ -11,13 +11,12 @@ export const Users = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [usersPerPage] = useState(4); // Número de activos por página
+  const [usersPerPage] = useState(10); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
-  const filteredUsers = store.users?.users || []; // Manteniendo todos los activos sin filtrar
-  console.log(filteredUsers);
+  const filteredUsers = store.users || []; // Manteniendo todos los activos sin filtrar
 
   // Calcular los índices para la paginación
   const indexOfLastUser = currentPage * usersPerPage; // Último activo en la página actual
@@ -84,9 +83,9 @@ export const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {currentUsers.map((user) => (
+            {currentUsers.map((user, index) => (
               <tr key={user.id}>
-                <td>{user.id}</td>
+                <td>{indexOfFirstUser + index + 1}</td>
                 <td>{user.user_name}</td>
                 <td>{user.names}</td>
                 <td>{user.last_names}</td>

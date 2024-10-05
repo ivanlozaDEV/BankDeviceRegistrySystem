@@ -37,7 +37,7 @@ const Home = () => {
           <h2 className="text-center">Iniciar Sesión</h2>
           {error && <p className="error">{error}</p>}
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
+            <label htmlhtmlFor="exampleInputEmail1" className="form-label">
               Nombre de usuario
             </label>
             <input
@@ -50,7 +50,7 @@ const Home = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlhtmlFor="exampleInputPassword1" className="form-label">
               Contraseña
             </label>
             <input

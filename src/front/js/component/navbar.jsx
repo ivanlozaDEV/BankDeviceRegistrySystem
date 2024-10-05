@@ -40,7 +40,7 @@ export const Navbar = () => {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon">
-          <i class="fa-solid fa-bars fs-3 text-white"></i>
+          <i className="fa-solid fa-bars fs-3 text-white"></i>
         </span>
       </button>
       <div className="collapse navbar-collapse pe-2" id="navbarNavDropdown">

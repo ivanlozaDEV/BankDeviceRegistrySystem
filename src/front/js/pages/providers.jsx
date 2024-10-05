@@ -11,13 +11,12 @@ export const Providers = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [providersPerPage] = useState(4); // Número de activos por página
+  const [providersPerPage] = useState(10); // Número de activos por página
 
   useTokenExpiration();
 
   // Filtrar activos según los filtros aplicados (actualmente no hay filtros)
   const filteredProviders = store.providers; // Manteniendo todos los activos sin filtrar
-  console.log(filteredProviders);
 
   // Calcular los índices para la paginación
   const indexOfLastProvider = currentPage * providersPerPage; // Último activo en la página actual
@@ -113,9 +112,9 @@ export const Providers = () => {
             </tr>
           </thead>
           <tbody>
-            {currentProviders.map((provider) => (
+            {currentProviders.map((provider, index) => (
               <tr key={provider.id}>
-                <td>{provider.id}</td>
+                <td>{indexOfFirstProvider + index + 1}</td>
                 <td>{provider.branch_id}</td>
                 <td>{provider.company_name}</td>
                 <td>{provider.rfc}</td>

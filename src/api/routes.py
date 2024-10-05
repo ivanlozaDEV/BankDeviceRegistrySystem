@@ -55,7 +55,7 @@ def signup():
         return jsonify({"error": "Ese nombre de usuario ya esta siendo utilizado"}), 400
     if User.query.filter_by(employee_number=employee_number).first() is not None:
         return jsonify({"error": "Ese número de empleado ya está siendo utilizado"}), 400
-    if user_name is None or password is None or names is None or last_names is None or employee_number is None or subzone is None or is_active is None:
+    if user_name is None or password is None or names is None or last_names is None or employee_number is None or subzone is None or is_active is None or role is None:
         return jsonify({"error": "Todos los campos son requeridos"}), 400
     password_hash = generate_password_hash(password)
 
@@ -318,15 +318,20 @@ def add_migration():
 
 #####################  EDIT ###################################
 
-# Edit ME
-@api.route('/edit_me', methods=['PUT'])
+# Edit USER
+@api.route('/editUser', methods=['PUT'])
 @jwt_required()
-def edit_me():
+def edit_user():
     try:
         body = request.json
+        user_id = body.get("id", None)
+        user = User.query.get(user_id)
+
         user_data = get_jwt_identity()
-        me_id = user_data["id"] 
-        user = User.query.get(me_id)
+        current_user_role = user_data["role"]
+
+        if current_user_role not in ["Master", "Admin"]:
+            return jsonify({"error": "No tienes permisos para realizar esta acción"}), 403
         
         if user is None:
             return jsonify({"error": "User not found"}), 404
@@ -340,6 +345,7 @@ def edit_me():
         user.last_names = body.get("last_names", user.last_names)
         user.employee_number = body.get("employee_number", user.employee_number)
         user.subzone = body.get("subzone", user.subzone)
+        user.role = body.get("role", user.role)
         
         db.session.commit()
         return jsonify({"message": "User updated successfully"}), 200

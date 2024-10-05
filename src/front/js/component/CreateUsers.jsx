@@ -6,7 +6,7 @@ export const CreateUsers = () => {
     <>
       <button
         type="button"
-        class="btn btn-primary"
+        className="btn btn-primary"
         data-bs-toggle="modal"
         data-bs-target="#createUserModal"
       >
@@ -14,26 +14,26 @@ export const CreateUsers = () => {
       </button>
 
       <div
-        class="modal fade"
+        className="modal fade"
         id="createUserModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="createUserModal"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="createProviderModal">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="createProviderModal">
                 Crear Usuario Nuevo
               </h5>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <FormUsers btnUser={"Crear"} />
             </div>
           </div>
