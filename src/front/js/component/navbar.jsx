@@ -116,13 +116,27 @@ export const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Agregar Usuario MB
+                <a
+                  className={
+                    getTokenInfo() !== "Master" && getTokenInfo() !== "Admin"
+                      ? "d-none"
+                      : "dropdown-item"
+                  }
+                  onClick={(e) => navigate("/usersMb")}
+                >
+                  Usuario MB
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Agregar Migración
+                <a
+                  className={
+                    getTokenInfo() !== "Master" && getTokenInfo() !== "Admin"
+                      ? "d-none"
+                      : "dropdown-item"
+                  }
+                  onClick={(e) => navigate("/migrations")}
+                >
+                  Migraciones
                 </a>
               </li>
             </ul>

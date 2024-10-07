@@ -11,6 +11,8 @@ import { Footer } from "./component/footer";
 import MasterDashboard from "./pages/masterDashboard.jsx";
 import { Users } from "./pages/users.jsx";
 import { Assets } from "./pages/assets.jsx";
+import { UsersMb } from "./pages/usersMb.jsx";
+import { Migrations } from "./pages/migrations.jsx";
 import { Providers } from "./pages/providers.jsx";
 import { Branches } from "./pages/branches.jsx";
 
@@ -31,6 +33,8 @@ const Layout = () => {
           <Route element={<MasterDashboard />} path="/masterDashboard" />
           <Route element={<Users />} path="/users" />
           <Route element={<Assets />} path="/assets" />
+          <Route element={<UsersMb />} path="/usersMb" />
+          <Route element={<Migrations />} path="/migrations" />
           <Route element={<Providers />} path="/providers" />
           <Route element={<Branches />} path="/branches" />
           <Route element={<h1>Not found!</h1>} />
