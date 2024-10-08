@@ -7,6 +7,7 @@ import * as XLSX from "xlsx"; // Importamos la librería xlsx para leer el archi
 export const CreateMigrations = () => {
   const [file, setFile] = useState(null); // Estado para almacenar el archivo seleccionado
   const [provider_id, setProviderId] = useState("");
+  const [branch_id, setBranchId] = useState("");
   const { store, actions } = useContext(Context);
 
   // Función para manejar la carga de archivos Excel
@@ -30,10 +31,9 @@ export const CreateMigrations = () => {
       const data = new Uint8Array(e.target.result);
       const workbook = XLSX.read(data, { type: "array" });
 
-      // Asumimos que el archivo tiene una hoja llamada 'Sheet1'
-      const sheetName = workbook.SheetNames[0];
+      const sheetName = workbook.SheetNames[0]; // Asumimos que hay una sola hoja
       const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }); // Convertimos los datos a JSON
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       // Verificamos que los datos tengan el formato correcto
       const [header, ...rows] = jsonData;
@@ -42,25 +42,22 @@ export const CreateMigrations = () => {
         "Migración",
         "Descripción",
         "Estado",
-        "Proveedor",
       ];
 
-      // Comprobamos si el archivo tiene todas las columnas necesarias
       const missingColumns = expectedColumns.filter(
         (col) => !header.includes(col)
       );
 
       if (missingColumns.length > 0) {
-        // Si faltan columnas, mostramos un mensaje claro con las columnas que faltan
         Swal.fire({
           icon: "error",
           title: "Error en el formato",
           html: `<p>El archivo no tiene las siguientes columnas requeridas: <b>${missingColumns.join(
             ", "
           )}</b></p>
-                 <p>El archivo debe tener las siguientes columnas en el encabezado: ${expectedColumns.join(
-                   ", "
-                 )}</p>`,
+               <p>El archivo debe tener las siguientes columnas en el encabezado: ${expectedColumns.join(
+                 ", "
+               )}</p>`,
         });
         return;
       }
@@ -72,22 +69,23 @@ export const CreateMigrations = () => {
           migration_date,
           migration_description,
           migration_status,
-          provider_id,
         ] = row;
-        console.log(
-          installation_date,
-          migration_date,
-          migration_description,
-          migration_status,
-          provider_id
-        );
+
+        // Formateamos las fechas a 'YYYY-MM-DD'
+        const formattedInstallationDate = new Date(installation_date)
+          .toISOString()
+          .split("T")[0];
+        const formattedMigrationDate = new Date(migration_date)
+          .toISOString()
+          .split("T")[0];
 
         actions.add_migration(
-          installation_date,
-          migration_date,
+          formattedInstallationDate,
+          formattedMigrationDate,
           migration_description,
           migration_status,
-          provider_id
+          provider_id,
+          branch_id
         );
       });
 
@@ -160,6 +158,25 @@ export const CreateMigrations = () => {
                           {provider.company_name}
                         </option>
                       ))}
+                    </select>
+                  </div>
+                  <div className="col-md-6">
+                    <select
+                      className="form-select"
+                      name="branch_id"
+                      aria-label="Default select example"
+                      value={branch_id}
+                      onChange={(e) => setBranchId(e.target.value)}
+                      required
+                    >
+                      <option value="">Selecciona una Sucursal</option>
+                      {store.branchs.map((branch, index) => {
+                        return (
+                          <option key={index + 1} value={branch.id}>
+                            {branch.branch_cr}
+                          </option>
+                        );
+                      })}
                     </select>
                   </div>
                 </div>

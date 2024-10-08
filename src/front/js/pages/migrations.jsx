@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import "../../styles/index.css";
 import Swal from "sweetalert2";
 import { CreateMigrations } from "../component/CreateMigrations.jsx";
+import { EditMigrations } from "../component/EditMigrations.jsx";
 
 export const Migrations = () => {
   const { store, actions } = useContext(Context);
@@ -111,9 +112,21 @@ export const Migrations = () => {
             <tbody>
               {currentMigrations.map((migration, index) => (
                 <tr key={migration.id}>
-                  <td>{migration.id}</td>
-                  <td>{migration.installation_date}</td>
-                  <td>{migration.migration_date}</td>
+                  <td>{indexOfFirstMigration + index + 1}</td>
+                  <td>
+                    {migration.installation_date
+                      ? new Date(migration.installation_date)
+                          .toISOString()
+                          .split("T")[0]
+                      : ""}
+                  </td>
+                  <td>
+                    {migration.migration_date
+                      ? new Date(migration.migration_date)
+                          .toISOString()
+                          .split("T")[0]
+                      : ""}
+                  </td>
                   <td>{migration.migration_description}</td>
                   <td>{migration.migration_status}</td>
                   <td>

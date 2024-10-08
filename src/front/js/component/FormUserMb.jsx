@@ -8,7 +8,7 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
   const navigate = useNavigate();
   const [userMB, setUserMb] = useState({
     user_name_MB: "",
-    is_active: "",
+    is_active: false,
     names: "",
     last_names: "",
     employee_number: "",
@@ -20,6 +20,14 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
 
   const handleChange = (e) => {
     setUserMb({ ...userMB, [e.target.name]: e.target.value });
+  };
+
+  const setIs_activeOnOff = (e) => {
+    if (userMB.is_active === true) {
+      setUserMb({ ...userMB, is_active: false });
+    } else {
+      setUserMb({ ...userMB, is_active: true });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -50,14 +58,18 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
             userMB.is_active,
             userMB.names,
             userMB.last_names,
-            userMB.employee_number
+            userMB.employee_number,
+            userMB.branch_id,
+            userMB.asset_id
           )
         : await actions.add_userMB(
             userMB.user_name_MB,
             userMB.is_active,
             userMB.names,
             userMB.last_names,
-            userMB.employee_number
+            userMB.employee_number,
+            userMB.branch_id,
+            userMB.asset_id
           );
       Swal.fire({
         position: "center",
@@ -99,6 +111,8 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
           confirmButton: "custom-confirm-button",
         },
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -108,15 +122,16 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
       navigate("/");
       return;
     }
-    actions.getUsers();
+    actions.getUsersMB();
     if (initialUser) {
       setUserMb({
         user_name_MB: initialUser.user_name_MB || "",
+        is_active: initialUser.is_active || "",
         names: initialUser.names || "",
         last_names: initialUser.last_names || "",
         employee_number: initialUser.employee_number || "",
-        branch_id: initialUser.branch_id || "",
-        asset_id: initialUser.asset_id || "",
+        branch_id: initialUser.branch_id,
+        asset_id: initialUser.asset_id,
       });
     }
   }, []);
@@ -145,9 +160,10 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
             type="checkbox"
             role="switch"
             name="is_active"
-            value={userMB.is_active ? userMB.is_active : true}
+            value={userMB.is_active}
             id="is_active"
-            onChange={(e) => handleChange(e)}
+            checked={userMB.is_active ? userMB.is_active : false}
+            onChange={setIs_activeOnOff}
           />
         </div>
         <div class="col-md-6">
@@ -188,6 +204,45 @@ export const FormUserMb = ({ id, btnMB, user: initialUser }) => {
             name="employee_number"
             onChange={handleChange}
           />
+        </div>
+        <div className="col-md-6">
+          <select
+            className="form-select"
+            name="branch_id"
+            aria-label="Default select example"
+            value={userMB.branch_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecciona una Sucursal</option>
+            {store.branchs.map((branch, index) => {
+              return (
+                <option key={index + 1} value={branch.id}>
+                  {branch.branch_cr}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="col-md-6">
+          <select
+            className="form-select"
+            name="asset_id"
+            aria-label="Default select example"
+            value={userMB.asset_id}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Selecciona un activo</option>
+            {store.assets.map((asset, index) => {
+              return (
+                <option key={index + 1} value={asset.id}>
+                  {asset.asset_type} - {asset.asset_brand} - {asset.asset_model}
+                  -{asset.asset_serial}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <hr />
         <div className="d-flex justify-content-end">

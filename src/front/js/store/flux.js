@@ -630,8 +630,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         is_active,
         names,
         last_names,
-        employee_number
+        employee_number,
+        branch_id,
+        asset_id
       ) => {
+        console.log(
+          id,
+          user_name_MB,
+          is_active,
+          names,
+          last_names,
+          employee_number,
+          branch_id,
+          asset_id
+        );
         const jwt = localStorage.getItem("token");
         const actions = getActions();
         try {
@@ -650,6 +662,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                 names,
                 last_names,
                 employee_number,
+                branch_id,
+                asset_id,
               }),
             }
           );

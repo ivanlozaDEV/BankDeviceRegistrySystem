@@ -112,9 +112,9 @@ export const UsersMb = () => {
             <tbody>
               {currentUsersMB.map((userMB, index) => (
                 <tr key={userMB.id}>
-                  <td>{userMB.id}</td>
+                  <td>{indexOfFirstUserMB + index + 1}</td>
                   <td>{userMB.user_name_MB}</td>
-                  <td>{userMB.is_active}</td>
+                  <td>{userMB.is_active ? "Sí" : "No"}</td>
                   <td>{userMB.names}</td>
                   <td>{userMB.last_names}</td>
                   <td>{userMB.employee_number}</td>

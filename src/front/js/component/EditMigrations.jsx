@@ -41,6 +41,7 @@ export const EditMigrations = ({ migration }) => {
                 id={migration.id}
                 btnMigration={"Actualizar"}
                 migration={migration}
+                key={migration.id}
               />
             </div>
             <div className="modal-footer">
@@ -50,9 +51,6 @@ export const EditMigrations = ({ migration }) => {
                 data-bs-dismiss="modal"
               >
                 Close
-              </button>
-              <button type="button" className="btn btn-primary">
-                Actualizar
               </button>
             </div>
           </div>

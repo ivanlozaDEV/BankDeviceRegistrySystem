@@ -16,12 +16,14 @@ export const FormMigrations = ({
     migration_description: "",
     migration_status: "",
     provider_id: "",
+    branch_id: "",
   });
 
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setMigration({ ...migration, [e.target.name]: e.target.value });
+    console.log(migration);
   };
 
   const handleSubmit = async (e) => {
@@ -48,14 +50,16 @@ export const FormMigrations = ({
             migration.migration_date,
             migration.migration_description,
             migration.migration_status,
-            migration.provider_id
+            migration.provider_id,
+            migration.branch_id
           )
         : await actions.add_migration(
             migration.installation_date,
             migration.migration_date,
             migration.migration_description,
             migration.migration_status,
-            migration.provider_id
+            migration.provider_id,
+            migration.branch_id
           );
       Swal.fire({
         title: response.title,
@@ -83,14 +87,23 @@ export const FormMigrations = ({
   useEffect(() => {
     if (initialMigration) {
       setMigration({
-        installation_date: initialMigration.installation_date || "",
-        migration_date: initialMigration.migration_date || "",
+        installation_date: initialMigration.installation_date
+          ? new Date(initialMigration.installation_date)
+              .toISOString()
+              .split("T")[0]
+          : "",
+        migration_date: initialMigration.migration_date
+          ? new Date(initialMigration.migration_date)
+              .toISOString()
+              .split("T")[0]
+          : "",
         migration_description: initialMigration.migration_description || "",
         migration_status: initialMigration.migration_status || "",
         provider_id: initialMigration.provider_id || "",
+        branch_id: initialMigration.branch_id || "",
       });
     }
-  }, [initialMigration]);
+  }, []);
 
   return (
     <form className="row g-3" onSubmit={handleSubmit}>
@@ -99,7 +112,7 @@ export const FormMigrations = ({
           Instalación
         </label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           id="inputTipo"
           value={migration.installation_date}
@@ -114,7 +127,7 @@ export const FormMigrations = ({
           Migration
         </label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           id="inputMarca"
           value={migration.migration_date}
@@ -174,7 +187,25 @@ export const FormMigrations = ({
           ))}
         </select>
       </div>
-
+      <div className="col-md-6">
+        <select
+          className="form-select"
+          name="branch_id"
+          aria-label="Default select example"
+          value={migration.branch_id}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Selecciona una Sucursal</option>
+          {store.branchs.map((branch, index) => {
+            return (
+              <option key={index + 1} value={branch.id}>
+                {branch.branch_cr}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <div className="col-12">
         <hr />
         <div className="d-flex justify-content-end">

@@ -451,12 +451,11 @@ def edit_userMB():
         body = request.json
         user_data = get_jwt_identity()
         user_id = body.get("id")
-        current_user_id = user_data["id"]
         
-        if not user_id or not current_user_id:
-            return jsonify({'error': 'Missing userMB ID or user ID'}), 400
+        if not user_id:
+            return jsonify({'error': 'Missing userMB ID'}), 400
         
-        userMB = UserMB.query.filter_by(id=user_id, user_id=current_user_id).first()
+        userMB = UserMB.query.filter_by(id=user_id).first()
         if userMB is None:
             return jsonify({'error': 'UserMB no found'}), 404
         
@@ -465,6 +464,8 @@ def edit_userMB():
         userMB.names = body.get("names", userMB.names)
         userMB.last_names = body.get("last_names", userMB.last_names)
         userMB.employee_number = body.get("employee_number", userMB.employee_number)
+        userMB.branch_id = body.get("branch_id", userMB.branch_id)
+        userMB.asset_id = body.get("asset_id", userMB.asset_id) 
         
         db.session.commit()
         return jsonify({"message": "UserMB updated successfully"}), 200

@@ -37,7 +37,12 @@ export const EditUsersMb = ({ user }) => {
               ></button>
             </div>
             <div class="modal-body">
-              <FormUserMb id={user.id} btnMB={"Actualizar"} />
+              <FormUserMb
+                key={user.id}
+                user={user}
+                id={user.id}
+                btnMB={"Actualizar"}
+              />
             </div>
           </div>
         </div>
